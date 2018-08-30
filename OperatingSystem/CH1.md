@@ -147,10 +147,10 @@ contains the memory address(es) of all the service routines (ISR)
 Response time should be < 1 second
 
 Each user has at least one program executing in
-memory ⇨ process
+memory ⇨ **process**
 
 If several jobs ready to run at the same time ⇨
-CPU scheduling
+**CPU scheduling**
 
 If processes don’t fit in memory, **swapping**
 moves them in and out to run

@@ -1,7 +1,7 @@
 # Memcached DDoS Attack
 Memcached 可以加速網站，但是 memcached 服務器也可以被利用來執行 DDoS 攻擊。
 ## What is an memcached DDoS attack ?
-memcached `distributed denial-of-service`（DDoS）攻擊是一種網路攻擊，攻擊者試圖透過 internet 流量使目標受害者overload。攻擊者 `spoos` 了對易受攻擊的 UDP memcached 服務器的請求，然後服務器會利用 internet 流量癱瘓目標受害者，從而可能癱瘓受害者的資源。當目標的 Internet 基礎結構過載時，無法處理新請求，並且正常流量無法訪問 Internet 資源，從而導致 denial-of-service。
+memcached `distributed denial-of-service`（DDoS）攻擊是一種網路攻擊，攻擊者試圖透過 internet 流量使目標受害者overload。攻擊者 `spoofs` 了對易受攻擊的 UDP memcached 服務器的請求，然後服務器會利用 internet 流量癱瘓目標受害者，從而可能癱瘓受害者的資源。當目標的 Internet 基礎結構過載時，無法處理新請求，並且正常流量無法訪問 Internet 資源，從而導致 denial-of-service。
 
 > Memcached 是一個用於加速網站和網路的數據庫緩存系統。
 
@@ -31,6 +31,6 @@ memcached 攻擊分4個步驟發生：
 3. Prevent IP spoofing
     - 只要 IP 地址可以被欺騙，DDoS 攻擊就可以利用此漏洞將流量引導到受害者網路。防止 IP 欺騙是一種更大的解決方案，任何特定的系統管理員都無法實現，並且它要求轉接提供商不允許任何數據包離開其網路，其來源 IP 地址源自網路外部。換句話說，諸如 internet 服務提供商（ISP）之類的公司必須過濾流量，使得不允許離開其網路的 packet 假裝來自其他地方的不同網路。如果所有主要的運輸提供商實施這種類型的過濾，基於欺騙的攻擊將在一夜之間消失。
 4. Develop software with reduced UDP responses
-    - 消除放大攻擊的另一種方法是去除任何傳入請求的放大因子，如果作為UDP 請求的結果發送的回應數據小於或等於初始請求，則不再能夠放大。
+    - 消除放大攻擊的另一種方法是去除任何傳入請求的放大因子，如果作為 UDP 請求的結果發送的回應數據小於或等於初始請求，則不再能夠放大。
 
 [memcrashed](https://blog.cloudflare.com/memcrashed-major-amplification-attacks-from-port-11211/)
