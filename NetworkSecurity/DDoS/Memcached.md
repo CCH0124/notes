@@ -21,7 +21,7 @@ memcached 攻擊分4個步驟發生：
 ![](https://www.cloudflare.com/img/learning/ddos/memcached-ddos-attack/cloudflare-memcached-attack.png)cloudflare 提供
 
 ## How big can a memcached amplification attack be ?
-這種攻擊的放大係數確實令人咋舌，在實踐中，我們目睹了高達 51,200 倍的放大因子！這意味著對於 15 byte 請求，可以發送 750 kB 回應。這代表了無法承受這一攻擊流量的網路屬性的巨大放大因素和安全風險。擁有如此大的放大係數和易受攻擊的服務器使得 memcached 成為尋求針對各種目標發起DDoS 的攻擊者的主要用例。
+這種攻擊的放大係數確實令人咋舌，在實踐中，我們目睹了高達 51,200 倍的放大因子！這意味著對於 15 byte 請求，可以發送 750 kB 回應。這代表了無法承受這一攻擊流量的網路屬性的巨大放大因素和安全風險。擁有如此大的放大係數和易受攻擊的服務器使得 memcached 成為尋求針對各種目標發起 DDoS 的攻擊者的主要用例。
 
 ## How can a memcached attack be mitigated ?
 1. Disable UDP

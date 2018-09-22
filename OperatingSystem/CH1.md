@@ -96,13 +96,13 @@ contains the memory address(es) of all the service routines (ISR)
 - Multiprocessor 多顆處理器系統
     - 一部機器中，同時具有多顆 CPUs（或 processors）
         - 這些 processors 共享 memory、I/O Device、Bus
-        - 受同一個clock控制
-        - 一般也受同一個OS所管控
+        - 受同一個 clock 控制
+        - 一般也受同一個 OS 所管控
         - processors 之間的溝通，是採 share memory 方式
-    - 支援parallel computing(平行計算)
+    - 支援 parallel computing (平行計算)
     - 可再分成兩種型態
         - Symmetric Multiprocessors(SMP)
-            - 每個processor的能力皆相同，即可負責的功能完全一樣。萬一某個processor壞了，其上工作可由其他processor接手，系統不會整個crash，只是整體效能下降而已
+            - 每個 processor 的能力皆相同，即可負責的功能完全一樣。萬一某個 processor 壞了，其上工作可由其他 processor 接手，系統不會整個 crash，只是整體效能下降而已
             - Reliability（可靠性）大幅提升
             - 強調 load balancing（每個CPU的工作負擔相同）
         - Asymmetric Multiprocessors(ASMP)
@@ -136,6 +136,9 @@ contains the memory address(es) of all the service routines (ISR)
 - 多個 process 同時執行，mode 有兩種
     - Concurrent(並行)
     - Parallel(平行)
+
+>![](https://joearms.github.io/images/con_and_par.jpg)
+
 ### Time Sharing System
 - 是 Multiprogramming 的一種，在 CPU 排班法則方面，其使用 RR(Round-Robin)法則
     - 即 OS 規定一個 CPU time quantum，若 process 在取得 CPU 後，未能於 quantum 內完成工作，則必須被迫放棄 CPU，等待下一次輪迴。
@@ -158,4 +161,36 @@ moves them in and out to run
 **Virtual memory** allows execution of processes
 not completely in memory
 
+![](https://i.imgur.com/xNv0Vow.png)Memory layout for a Multiprogramming system
+
+其中它是以 Concurrent 模式去執行
 ## Operating-System Operations
+
+- **Interrupt** driven by hardware
+- A **trap** or an **exception**
+    - Software error or reques
+        - Division by zero, request for operating system service
+- Dual-mode operation 操作允許操作系統保護自身和其他系統組件
+    - User mode
+        - 在此 mode 之下，不能執行特權指令，否則會產生致命錯誤中斷(trap)，OS 會強迫 process 中止
+    - kernel mode
+        - 是 OS 的 system processes 在執行(OS 的 system process 執行的狀態，在此 mode 下，OS 掌控系統的控制權)(eg. ISR、systemcall，對應的service routine)
+        - 有權執行特權指令(priveleged instruction)
+    - Mode bit provided by hardware
+        - 0：kernel mode
+        - 1：user mode
+        - 提供區分系統何時運行 user 代碼或 kernel 代碼的能力
+        - 一些指令被指定為 **privileged**，只能在 kernel mode 下執行
+        - 系統調用更改模式到內核，從調用返回將其重置為用戶
+>Dual mode 目的，對 Hardware 重要的 resources 實施 protection，把可能引起危害的一些機器指令，設為 priveleged instruction，如此可防止 user program 直接使用這些指令，避免 user program 執行這些指令對系統或其它 user 造成危害
+### Transition from User to Kernel Mode
+
+![](https://i.imgur.com/yPrNZS5.png)
+
+## Process Management
+- A process is a program in execution.
+    - 系統內的一個單元
+    - Program is a **passive entity**
+    - process is an **active entity**
+- process 需要資源，結束任務後必須釋放資源
+- Single-threaded process 有一個 **program counter**，用於指定要執行的下一條指令的位置
