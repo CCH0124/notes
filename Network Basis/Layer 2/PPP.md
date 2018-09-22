@@ -87,10 +87,12 @@ PPP 協定的連線也可以在路由器的介面（Interfaces ）上使用流�
 
 ### 多通道的 PPP 協定
 - Multilink PPP 協定
-  - Multilink PPP 又稱為 MLPPP，或是 MP、MPPP、MLP 等等。MPPP 允許在多個不同的 PPP 連線中傳遞網路封包。舉例來說，MPPP 可以同時在兩條或是更多的網路專線、多條撥接網路上傳遞 PPP 封包。但是，==每一條 PPP 連線上所有的網路封包必須依照先後順序傳遞==，因此所有的 PPP 網路封包必須加上序號，以便於之後組裝時了解網路封包的先後順序。Cisco的網路設備必須把Cisco IOS升級到11.1，才能支援Multilink PPP。
+  - Multilink PPP 又稱為 MLPPP，或是 MP、MPPP、MLP 等等。MPPP 允許在多個不同的 PPP 連線中傳遞網路封包。舉例來說，MPPP 可以同時在兩條或是更多的網路專線、多條撥接網路上傳遞 PPP 封包。但是，==每一條 PPP 連線上所有的網路封包必須依照先後順序傳遞==，因此所有的 PPP 網路封包必須加上序號，以便於之後組裝時了解網路封包的先後順序。
 - Multiclass PPP 協定
   - 在多個不同的 PPP 連線中無法同時建立並使用多個 PPP 連線，Multilink PPP 也不行。Multilink PPP 是指可以讓單一 PPP 連線同時在多個不同的連線媒介中完成。Multiclass PPP 是其中一種 Multilink PPP 的延伸，但是每一種 Traffic 的類型都用不同的序號來定序網路封包。
-  
+
+>Cisco 的網路設備必須把 Cisco IOS 升級到 11.1，才能支援 Multilink PPP。
+
 ## PPP 協定連線的建立過程
 PPP 協定連線的建立過程分成三個階段。
 1. **網路連線建立**
