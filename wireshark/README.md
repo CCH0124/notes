@@ -111,3 +111,44 @@
 可能想把你特別注意的封包標記起來。
 
 >`ctrl+M`，在按一次則取消。檢視下一個被標記的封包 `shift+ctrl+N`，檢視上一個則是 `shift+ctrl+B`
+
+## 設定捕捉選項
+
+Capture -> Options
+
+![](https://i.imgur.com/PLfQfNI.png)
+
+有三個主頁面：
+- input
+- output
+- options
+
+### input
+![](https://i.imgur.com/PLfQfNI.png)
+
+顯示可用來捕捉封包的介面，和該介面的基本資訊，如：OS的介面名稱、該介面吞吐量折線圖、混雜模式、緩衝區大小等等。
+
+### output
+![](https://i.imgur.com/rqFxXWR.png)
+
+指定捕捉到封包的自動儲存檔案方式，非先捕捉再個別存檔。
+當捕捉大量的流量或是進行長時間持續的捕捉，採用一組檔案集合來儲存的方式會特別方便。若要啟動此功能需勾選 **Create a new file automatically after ...**，可以選擇每捕捉 1 MB 或每捕捉 1 分鐘的流量，建立檔案儲存。如果加上 **ring buffer** 選項，可控制輸出檔案的數量，當超過保留預設數量時，會從頭開始複寫檔案。
+
+>檔案集合（file set），一群按照特定情況分組的檔案。
+
+### options
+這裡也是捕捉封包的選項，例如顯示方式、Name Resolution、自動結束捕捉等等。
+
+![](https://i.imgur.com/c6ejTHQ.png)
+
+#### Display Options
+捕捉封包後的呈現方式。
+
+- Update list of packet in real-time
+  - 即時更新封包清單顯示
+- Automatically scroll during live capture
+  - 進行捕捉時自動自動滾動畫面
+- Show extra capture information dialog
+  - 顯示其它捕捉資訊對話框
+
+>Update list of packet in real-time 和 Automatically scroll during live capture 對主機處理器造成負擔，非必要時應適當關閉。
