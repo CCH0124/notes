@@ -1,6 +1,5 @@
 # Wireshark-Operating
 操作 wireshark 文件
-
 ## Configuration profile
 使用者可以定義出好幾組彼此不同的偏好設定，並個別儲存
 
@@ -126,7 +125,7 @@ Capture -> Options
 ### input
 ![](https://i.imgur.com/PLfQfNI.png)
 
-顯示可用來捕捉封包的介面，和該介面的基本資訊，如：OS的介面名稱、該介面吞吐量折線圖、混雜模式、緩衝區大小等等。
+顯示可用來捕捉封包的介面，和該介面的基本資訊，如：OS 的介面名稱、該介面吞吐量折線圖、混雜模式、緩衝區大小等等。
 
 ### output
 ![](https://i.imgur.com/rqFxXWR.png)
@@ -152,3 +151,35 @@ Capture -> Options
   - 顯示其它捕捉資訊對話框
 
 >Update list of packet in real-time 和 Automatically scroll during live capture 對主機處理器造成負擔，非必要時應適當關閉。
+
+#### Name Resolution
+主要用來開啟 MAC、Network、Transport 等名稱解釋，讓捕捉的封包叫好解釋。
+
+- Stop capture automatically after ...
+  - 在...之後自動停止捕捉
+
+## 使用篩選器
+用於界定要分析的封包，簡而言之就是一個**表示式（expression）**
+
+### 捕捉用篩選器
+![](https://i.imgur.com/oz3Vw2p.png)
+
+### 顯示用篩選器
+![](https://i.imgur.com/mRe5R46.png)
+
+### 顯示篩選器表示式對花框
+點選 **Expression**
+
+![](https://i.imgur.com/Tmj9a6G.png)
+
+其中格式應該都是以 *protocol.feature.subfeature*
+
+### 儲存篩選器
+輸入且常用的捕捉篩選器，不用一直輸入，可以利用 wireshark 幫你儲存。
+1. 點選 **Capture -> Capture Filters**，開啟捕捉篩選器視窗
+2. 點選左下 **+** 選項，用以新增篩選器
+3. 分別在 Name 欄位輸入篩選器名稱和在 Filter 欄位輸入表達式
+4. 點選 **OK**，將它儲存
+
+![](https://i.imgur.com/aOl87JN.png)
+
