@@ -183,3 +183,29 @@ Capture -> Options
 
 ![](https://i.imgur.com/aOl87JN.png)
 
+## 端點與會話
+端點指的是網路上收發資料的個裝置；會話指的是兩個端點之間的通訊。在會話要如何以位址識別端點？
+
+![](![](https://i.imgur.com/ukqMh2u.png)
+
+圖中會話 A 有兩個端點在資料鏈接層通訊（MAC）。
+圖中會話 B 有兩個端點在網路層通訊（IP）。
+
+### 檢視端點統計
+在分析流量時，會發現可以將問題精準的歸咎於網路中的某個端點。
+點選 **Statistic -> Endpoint**，該視窗顯示多欄位的統計資料，如位址、封包數量、收發位元組數量等等。
+
+![](https://i.imgur.com/Er0wTHC.png)
+
+
+>想顯示其它的協定欄位，點擊 **Endpoint Types**，勾選想加入顯示的協定即可。
+>在一個龐大的捕捉結果，可以在篩選器做篩選，在開啟 Endpoint 並勾選 **Limit to display filter**，會統計篩選過後的端點資訊。
+
+### 檢視網路會話
+點選 **Statistic -> Conversations**，該視窗顯示捕捉的每一組會話。這邊 Conversations 視窗在每一行顯示兩個位置，表示兩者間的會話。
+
+![](https://i.imgur.com/iXfQcCO.png)
+
+欄位 *Address A* 表示會話發起點，欄位 *Address B* 表示會話目的地。
+
+>想顯示其它的協定欄位，點擊 **Conversations Types**，勾選想加入顯示的協定即可。
