@@ -207,5 +207,92 @@ Capture -> Options
 ![](https://i.imgur.com/iXfQcCO.png)
 
 欄位 *Address A* 表示會話發起點，欄位 *Address B* 表示會話目的地。
+透過檢視看到發送的封包流量，再透過篩選器去過濾。
 
 >想顯示其它的協定欄位，點擊 **Conversations Types**，勾選想加入顯示的協定即可。
+
+### 協定的階層式統計
+
+對一個陌生的捕捉流量結果，有時必須借助流量中的協定分布狀況來判斷。透過 wireshark 的協定的階層式統計可以發掘 TCP、IP、DHCP 和其它協定的流量分別占用了多少。
+
+點選 **Statistics -> Protocol Hierarchy** 如下圖
+
+![](https://i.imgur.com/X5lHj0s.png)
+
+其中 98.7% 都是 IPv4，TCP 96.7% 等等。或者可能 ARP 協定正常只有 1%，結果突然暴增 5%，代表一定有問題。
+
+## 名稱解釋
+
+端點間之所以可以交換資料，都是依靠數字和文字的系統，像是 MAC、IPv4、IPv6 等等。於是 wireshark 有個像 DNS 作用的功能，**名稱解釋（Name Resolution）**，可把較難記憶的 address 轉換方便記憶的 address。如 216.58.217.238 較難以計憶於是轉換成 google.com 使得較方便記憶。
+
+### 啟用名稱解釋
+點選 **Edit -> Preferences ->Name Resolution**
+![](https://i.imgur.com/c7csNV2.png)
+
+#### Resolve MAC address
+
+其中 **Resolve MAC address** 試圖藉由 ARP 協定轉換成類似第三層的位址。如果都轉不成功，wireshark 會把前 3 個位元組轉換成 IEEE 指定的製造商名稱，如 Vmware_f3:ca:52 (00:50:56:f3:ca:52)
+
+#### Resolve transport names
+這個設定會嘗試把通訊 port 轉譯成熟知名稱，如 80 port 轉 http。在碰到不熟悉的或不常見的 port 可以使用此功能。
+
+#### Resolve network addresses
+
+此設定會把 192.168.1.100 第三層的位址轉換易懂的 DNS 名稱。透果此選項可以讓管理者較好辨識。
+
+#### Use captured DNS packet data for address resolution
+
+將捕捉到的 DNS 封包裡的資料做解析，藉以將 IP address 轉換 DNS 名稱。
+
+#### Use an external network name resolver
+讓 wireshark 直接詢問分析主機所仰賴的 DNS server，藉以將 IP address 轉換為 DNS 名稱。如果分析的捕捉結果裡缺乏 DNS 相關封包可參照，這種轉譯方式會比較好用。
+
+#### Maximum concurrent requests
+限制可以同時進行的 DNS 查詢動作數量。如果捕捉檔案結果在轉譯名稱時會產生大量 DNS 查詢請求，可能因此會占用太多網路或 DNS server 的可用頻寬，可以參考此選項。
+
+#### Only use the profile hosts file
+將 DNS 解釋範圍限制在 wireshark 的設定檔所知範圍內。
+
+> Preferences 會將設定檔部分會儲存起來。暫時性設定可透過 **View -> Name Resolution**
+
+### 名稱解釋的缺點
+- 無 DNS server 協助將 IP address 轉換名稱，則轉譯就會失敗。
+- 如果在不同網路上開起捕捉檔案，則系統可能無法取用原使網路的 DNS server，導致無法正確解釋捕捉檔的相關名稱。
+- Use an external network name resolver 盡量關閉，避免讓駭客得知行蹤。
+
+## 解析協定內容
+wireshark 提供了一個 framework，讓你可以自行建立**封包解析器（protocol dissectors）**。wireshark 靠解析器來辨識協定並解釋（decode）成各個區塊。
+
+### 更改解析器
+假設把 FTP 預設 port 設 443 wireshark 極可能將此 port 誤認 SSL。要修正此問題須使用*強制解碼（forced decode）*以便正確分析。
+1. 選一個誤判的 SSL 封包，點選右鍵選 **Decode As**
+2. 在 Field 欄位改選 TCP port，value 輸入 443，current 欄位選 FTP 來解析所有 TCP 443 port 流量
+![](https://i.imgur.com/BK7Y4op.png)
+3. 設定完成後，會有不一樣的分析結果
+
+## 追蹤串流
+此功能從多個封包裡，把分散的資料在重整一致、容易判讀的格式，稱之**封包文本（packet transcript）**，這樣不必在用戶端與伺服器之間往來的封包片段中檢閱。
+
+- TCP stream
+  - 從使用 TCP 的協定中把資料組合起來，如 FTP
+- UDP stream
+  - 從使用 UDP 的協定中把資料組合起來，如 DNS
+- SSL stream
+  - 從已加密的協定中把資料組合起來，如 HTTPS。
+  - 必須要有密鑰才能將流量解密
+- HTTP stream
+  - 從 HTTP 協定中把資料解壓縮及組合起來。
+  - 利用 TCP stream 追蹤 HTTP 資料，無法把 HTTP 完全解碼時，需要此模式 
+### 追蹤 SSL 串流
+SSL 串流內容都是已經加密，必須要拿到伺服器端當初替流量加密的**私鑰（private key）**。取得此私鑰要看伺服器所採用的加密技術而定。
+
+wireshark 運用：
+1. 點選 **Edit -> preferences**，進入 wireshark 的偏好設定
+2. 展開 **protocol**，選 **SSL** 協定。
+![](https://i.imgur.com/7QFJhIz.png)
+3. 點選 **RSA key list** 的 **Edit** 並按 **+**
+4. 填入負責加密的伺服器 IP address、Port、protocol、密鑰檔案位置，若必要還需填上密鑰檔案的使用密碼
+5. 完成後，即可捕捉用戶端與伺服端的加密流量並利用 SSL 串流查看解密。
+
+## 封包長度
+在正常的情況下，
