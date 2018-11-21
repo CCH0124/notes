@@ -310,3 +310,81 @@ wireshark 運用：
 歸納資料最好的方法。
 ### 檢視 IO 圖表    
 - 網路資料吞吐量
+    - 從中觀察個別協定的效能和慈遲滯現象
+    - 比較同時進行的資料串流
+
+選擇 Statistics -> IO Graph
+
+![](https://i.imgur.com/ALvr0Vu.png)
+
+其中可在下方視窗中設定篩選器，並指定篩選後呈現圖表樣式。
+
+### 往返時間圖表
+*round-trip time（RTT）* 是指收到一個封包抵達後確認回覆所需要的時間。簡單來說就是來源封包抵達目的地所需的時間，再加上確認封包已抵達的回覆送到來源這邊的全部時間。
+- 通訊途中的緩慢
+- 瓶頸之處
+- 想確認是否有任何延遲現象
+
+點選 Statistics -> TCP Stream Graphs -> Round Trip Time Graph
+![](https://i.imgur.com/iXkp8w2.png)
+
+上途中的每一個點都代表著某個封包的 RTT
+
+### 資料流動圖表
+對於檢視資料隨時間而流動的過程，圖中裡資訊可以更清楚看出裝置之間如何通訊。
+
+點選 Statistics -> Flow Graph
+
+![](https://i.imgur.com/0Le1UrU.png)
+
+每一條垂直線都代表著某一台主機。
+Flow Graph 是用來檢視兩個裝置之間來回通訊絕佳方式，也可以提高查看主機之間的關聯性。
+
+## 專家資訊
+每個協定解析器都有定義**專家資訊（expert info）**，會在協定封包出現特定狀態時發出警示。
+狀態分為以下：
+- Chat
+    - 關於通訊協定基本資訊
+- Note
+    - 不尋常的封包，但可能還是正常通訊的一部分
+- Warning
+    - 不尋常的封包，很可能也不是正常通訊的一部分
+- Error
+    - 封包中或其解析器中有錯誤
+
+點選 Analyze -> Expert Information
+
+![](https://i.imgur.com/uvFJI9U.png)
+
+##### Chat 訊息
+- Window Update（接收窗口異動）
+    - 由接收端發出，通知發送端 TCP receive window 已變更了。
+##### Note 訊息
+- TCP Retransimission（TCP 重傳）
+    - 這是封包遺失的後果。如果收到重複的 ACK 或是封包計時器已逾時，就會出現這種情況。
+- Duplicate ACK（重複的 ACK）
+    - 當主機未依他期待得順序接收時，他就會用前一個接收的封包產生一個重複的 ACK。
+- Zero window Probe（偵測接收窗口為零）
+    - 一旦發出 `Zero window` 封包後，會監控 TCP recevie window 的狀態。
+- Keep Alive ACK（維持連線的 ACK）
+    - 為回應 `Keep Alive` 封包而發出。
+- Zero window Probe ACK（偵測接收窗口為零的 ACK）
+    - 為回應 `Zero window Probe` 封包而發出。
+- Window Is Full（接收窗口已滿）
+    - 通知發送端主機案接收端的 TCP 接收窗口已滿。
+##### Warning 訊息
+- Previous Segment Lost（前一區段遺失）
+    - 代表封包已遺失。當某資料串流裡的預期序號被略過時，這個訊息就會發生。
+- ACKed Lost Packet（以確認過有封包遺失）
+    - 代表已經看到 ACK 封包，但卻沒看到 ACK 封包所確認的封包本身。
+- Keep Alive（維持連線）
+    - 如果看到連線的 `keep alive` 封包時就會觸發。
+- Zero Window（接收窗口為零）
+    - 一旦 TCP 接收窗口大小降為零且接收窗口為零的通告也發出時，就會藉此要求發送方不要再發送資料。
+- Out-of-Order（順序已亂）
+    - 利用序號來偵測封包不依順序接收。
+- Fast Retransmission（快速重傳）
+    - 在收到重複 ACK 的 20 毫秒內重送。
+##### Error 訊息
+- No Error Messages（沒有錯誤訊息）
+
