@@ -173,15 +173,22 @@ not completely in memory
 - Dual-mode operation 操作允許操作系統保護自身和其他系統組件
     - User mode
         - 在此 mode 之下，不能執行特權指令，否則會產生致命錯誤中斷(trap)，OS 會強迫 process 中止
+        - CPU 所提供的執行模式之一，只能存取有限的硬體資源
+            - 普通運算所需的暫存器
+            - 部分記憶體內容
     - kernel mode
-        - 是 OS 的 system processes 在執行(OS 的 system process 執行的狀態，在此 mode 下，OS 掌控系統的控制權)(eg. ISR、systemcall，對應的service routine)
+        - 是 OS 的 system processes 在執行(OS 的 system process 執行的狀態，在此 mode 下，OS 掌控系統的控制權)(eg. ISR、systemcall，對應的 service routine)
         - 有權執行特權指令(priveleged instruction)
+        - 可以對硬體做任何的變更
+            - 控制暫存器（control registers）
+            - 所有記憶體
     - Mode bit provided by hardware
         - 0：kernel mode
         - 1：user mode
         - 提供區分系統何時運行 user 代碼或 kernel 代碼的能力
         - 一些指令被指定為 **privileged**，只能在 kernel mode 下執行
         - 系統調用更改模式到內核，從調用返回將其重置為用戶
+
 >Dual mode 目的，對 Hardware 重要的 resources 實施 protection，把可能引起危害的一些機器指令，設為 priveleged instruction，如此可防止 user program 直接使用這些指令，避免 user program 執行這些指令對系統或其它 user 造成危害
 ### Transition from User to Kernel Mode
 
