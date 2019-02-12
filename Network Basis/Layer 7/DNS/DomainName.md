@@ -23,7 +23,7 @@ TLD 左側是 second-level domain（2LD），如果 2LD 左側有任何內容，
 - '.com' is the TLD (most general)
 - '.co'* is the 2LD
 - 'google' is the 3LD (most specific)
->* 在這種情況下，2LD 表示註冊域名的組織類型（英國的 .co 是公司註冊的站點）
+>在這種情況下，2LD 表示註冊域名的組織類型（英國的 .co 是公司註冊的站點）
 
 ## How to keep a domain name secure
 一旦域名註冊到註冊商，該註冊商就會在域名即將到期時通知註冊人，並讓他們有機會續訂，確保他們不會丟失域名。在某些情況下，註冊商會透過在他們過期的第二個域名中購買這些域名然後以高昂的價格將其出售給原始註冊人來捕獲用戶的過期域名。選擇誠實可靠的註冊商來避免這些掠奪性做法非常重要。
