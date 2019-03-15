@@ -1,10 +1,10 @@
 # Serverless Definition
-serverless 計算是一種在使用的基礎上提供後端服務的方法。仍然使用服務器，但是從serverless 供應商獲得後端服務的公司根據使用情況收費，而不是根據固定數量的 bandwidth 或服務器數量收費。
+`serverless` 計算是一種在使用的基礎上提供後端服務的方法。仍然使用服務器，但是從 `serverless` 供應商獲得後端服務的公司根據使用情況收費，而不是根據固定數量的 bandwidth 或服務器數量收費。
 
 ## What is serverless computing ?
-serverless 計算是一種在使用的基礎上提供後端服務的方法。**serverless 提供程序允許用戶編寫和部署代碼，而無需擔心底層基礎架構**，從serverless 供應商獲得後端服務的公司根據其計算收費，並且不必為固定數量的 bandwidth 或服務器數量預留和支付，因為**該服務是自動擴展**的。
+`serverless` 計算是一種在使用的基礎上提供後端服務的方法。**serverless 提供程序允許用戶編寫和部署代碼，而無需擔心底層基礎架構**，從 `serverless` 供應商獲得後端服務的公司根據其計算收費，並且不必為固定數量的 bandwidth 或服務器數量預留和支付，因為**該服務是自動擴展**的。
 
->雖然稱為serverless ，但仍然使用物理服務器，但開發人員不需要了解它們。
+>雖然稱為 serverless ，但仍然使用物理服務器，但開發人員不需要了解它們。
 
 在網路發展初期，任何想要構建 Web 應用程序的人都必須擁有運行服務器所需的物理硬體，這是一項繁瑣且昂貴的任務。
 
@@ -12,7 +12,7 @@ serverless 計算是一種在使用的基礎上提供後端服務的方法。**s
 
 ![](https://www.cloudflare.com/img/learning/serverless/what-is-serverless/benefits-of-serverless.svg)
 
-serverless 計算允許開發人員以靈活的"即用即付"方式購買後端服務，這意味著開發人員只需為他們使用的服務付費。這就像從具有每月固定限制的手機數據計劃切換到僅對實際使用的每個數據流量收費的計劃。
+`serverless` 計算允許開發人員以靈活的"即用即付"方式購買後端服務，這意味著開發人員只需為他們使用的服務付費。這就像從具有每月固定限制的手機數據計劃切換到僅對實際使用的每個數據流量收費的計劃。
 
 "serverless"一詞有些誤導，因為仍有服務器提供這些後端服務，但所有服務器空間和基礎架構問題都由供應商處理。serverless 意味著開發人員可以完成工作而無需擔心服務器。
 
@@ -38,14 +38,14 @@ backend 是用戶看不到的部分。這包括應用程式文件所在的服務
 
 ## What kind of backend services can serverless computing provide ?
 
-大多數 serverless 提供商為其客戶提供數據庫和儲存服務，而且許多提供商還擁有`Function-as-a-Service （FaaS）` 平台，如：Cloudflare Workers，這些平台可以在邊緣上執行代碼片段而不存儲任何數據。
+大多數 `serverless` 提供商為其客戶提供數據庫和儲存服務，而且許多提供商還擁有`Function-as-a-Service （FaaS）` 平台，如：Cloudflare Workers，這些平台可以在邊緣上執行代碼片段而不存儲任何數據。
 
 ## What are the advantages of serverless computing ?
 ##### Lower costs 
-Serverless 計算通常非常具有成本效益，因為後端服務（服務器分配）的傳統雲提供商通常會導致用戶為未使用的空間或空閒 CPU 時間付費。
+`Serverless` 計算通常非常具有成本效益，因為後端服務（服務器分配）的傳統雲提供商通常會導致用戶為未使用的空間或空閒 CPU 時間付費。
 ##### Simplified scalability
-使用 serverless 架構的開發人員**不必擔心擴展其代碼的策略**。Serverless 供應商按需求處理所有擴展。
+使用 `serverless` 架構的開發人員**不必擔心擴展其代碼的策略**。`Serverless` 供應商按需求處理所有擴展。
 ##### Simplified backend code
-使用 FaaS，開發人員可以創建獨立執行單一目的的簡單函數。例如：進行 API 調用。
+使用 `FaaS`，開發人員可以創建獨立執行單一目的的簡單函數。例如：進行 `API` 調用。
 ##### Quicker turnaround
-Serverless 架構可以顯著縮短產品上市時間。開發人員可以逐個添加和修改代碼，而不需要復雜的部署過程來推出錯誤修復和新功能。
+`Serverless` 架構可以顯著縮短產品上市時間。開發人員可以逐個添加和修改代碼，而不需要復雜的部署過程來推出錯誤修復和新功能。
