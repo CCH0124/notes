@@ -186,7 +186,7 @@ Capture -> Options
 ## 端點與會話
 端點指的是網路上收發資料的個裝置；會話指的是兩個端點之間的通訊。在會話要如何以位址識別端點？
 
-![](![](https://i.imgur.com/ukqMh2u.png)
+![](https://i.imgur.com/ukqMh2u.png)
 
 圖中會話 A 有兩個端點在資料鏈接層通訊（MAC）。
 圖中會話 B 有兩個端點在網路層通訊（IP）。
