@@ -197,6 +197,13 @@ Capture -> Options
 
 ![](https://i.imgur.com/Er0wTHC.png)
 
+- Address 表示端點的位置
+- Packets 表示在捕捉檔案中包含該位址的封包數
+- Bytes 表是封包的位元組資料
+- Tx Packets 表示發送的資料封包數
+- Tx Bytes 表示封送封包的位元數
+- Rx Packets 表示接收的資料封包數
+- Rx Bytes 表示接收的位元數
 
 >想顯示其它的協定欄位，點擊 **Endpoint Types**，勾選想加入顯示的協定即可。
 >在一個龐大的捕捉結果，可以在篩選器做篩選，在開啟 Endpoint 並勾選 **Limit to display filter**，會統計篩選過後的端點資訊。
@@ -220,6 +227,13 @@ Capture -> Options
 ![](https://i.imgur.com/X5lHj0s.png)
 
 其中 98.7% 都是 IPv4，TCP 96.7% 等等。或者可能 ARP 協定正常只有 1%，結果突然暴增 5%，代表一定有問題。
+
+- Protocol 表示協定名稱
+- %Packets 含有該協定的封包數目在捕捉檔案所有封包中所佔的比例
+- Packets 含有該協定的封包數目
+- %Bytes 含有該協定的位元數目在捕捉檔案所有封包中所佔的比例
+- Bytes 含有該協定的位元數目
+- MBit/s 該協定的頻寬，相對捕捉時間 `End Packets`、`End Bytes`、`End Mbit/s`
 
 ## 名稱解釋
 
