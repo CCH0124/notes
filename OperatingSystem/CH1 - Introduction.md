@@ -125,10 +125,105 @@ Computer = hardware + operating system + application program + user
   - Increased reliability
     - Graceful degradation、Fault-Tolerant（Fault-Soft Syetem）無視硬體失誤而持續作業系統的能力，稱適度的降級
 
+![ A dual-core design with two cores placed on the same chip](https://i.imgur.com/Xdtstj5.png)
+
+兩個核心放置在同一芯片上
+
+### Clustered Systems
+
+![](https://i.imgur.com/wvX3I4O.png)
+
+- Usually sharing storage via a storage-area network (SAN)
+- Provides a high-availability service which survives failures
+- 集合許多 CPU 以完成計算工作，不同於 parallel system，它們是由兩個或更多個別系統集結組成，彼此經由 LAN 緊密連結而成，且共享相同的stroage device 目的在於提供 High availability
+- 分為兩種 modes
+    - Asymmetric clustering
+        - 有一台機器處於 Hot-standby，用於監督其他正在執行應用程式的機器，若某台機器壞了，則此監督者可以取得壞掉機器的儲存體所有權，並重新執行其正執行的應用程式
+- Symmetric clustering
+    - 兩台或多台機器在執行應用程式，且彼此互相監督，此 mode 較有效率（它可以使用所有可以使用之 HW）
 
 ## Operating-System Structure
+
+### A time-sharing ( multi-user multi-tasking )
+- Memory management
+- Process management
+- Job scheduling
+- Resource allocation strategies
+- Swap space / virtual memory in physical memory
+- Interrupt handling
+- File system management
+- Protection and security
+- Inter-process communications
+
+- 是 Multiprogramming 的一種，在 CPU 排班法則方面，其使用 RR(Round-Robin)法則
+- 即 OS 規定一個 CPU time quantum，若 process 在取得 CPU 後，未能於 quantum 內完成工作，則必須被迫放棄 CPU，等待下一次輪迴。
+對每個 user 皆是公平的
+- 適用在 user interactive 且 response time(反應時間)要求較短的系統環境
+- 透過 resource sharing 技術（eg. CPU scheduling、memory sharing、spooling 達到 I/O Device 共享）使得每個 user 皆認為有專屬的系統存在。
+
+![Memory layout for a multiprogramming system](https://i.imgur.com/FT8lY2M.png)
+
+
+##### creating interactive computing
+Response time should be < 1 second
+
+Each user has at least one program executing in memory ⇨ **process**
+
+If several jobs ready to run at the same time ⇨ **CPU scheduling**
+
+If processes don’t fit in memory, **swapping** moves them in and out to run
+
+**Virtual memory** allows execution of processes not completely in memory
+
+>Multiprogramming system，其中它是以 Concurrent 模式去執行
+
 ## Operating-System Operations
+
+![](https://i.imgur.com/1PX2gf4.png)
+
+- **Interrupt** driven by hardware
+- A **trap** or an **exception**
+    - Software error or reques
+        - Division by zero, request for operating system service
+### Dual-Mode and Multimode Operation
+
+- Dual-mode operation 操作允許操作系統保護自身和其他系統組件
+    - User mode
+        - 在此 mode 之下，不能執行特權指令，否則會產生致命錯誤中斷(trap)，OS 會強迫 process 中止
+        - CPU 所提供的執行模式之一，只能存取有限的硬體資源
+            - 普通運算所需的暫存器
+            - 部分記憶體內容
+    - kernel mode
+        - 是 OS 的 system processes 在執行(OS 的 system process 執行的狀態，在此 mode 下，OS 掌控系統的控制權)(eg. ISR、systemcall，對應的 service routine)
+        - 有權執行特權指令(priveleged instruction)
+        - 可以對硬體做任何的變更
+            - 控制暫存器（control registers）
+            - 所有記憶體
+    - Mode bit provided by hardware
+        - 0：kernel mode
+        - 1：user mode
+        - 提供區分系統何時運行 user 代碼或 kernel 代碼的能力
+        - 一些指令被指定為 **privileged**，只能在 kernel mode 下執行
+        - 系統調用更改模式到內核，從調用返回將其重置為用戶
+
+>Dual mode 目的，對 Hardware 重要的 resources 實施 protection，把可能引起危害的一些機器指令，設為 priveleged instruction，如此可防止 user program 直接使用這些指令，避免 user program 執行這些指令對系統或其它 user 造成危害
+
+### Timer
+- 在 `kernel` 開始執行用戶代碼之前，設置定時器以生成中斷
+- 定時器 `interrupt` 處理恢復控制回內核
+- 這確保沒有用戶 `process` 可以接管系統
+- 定時器控制是一種 `privileged` 指令（需要 `kernel mode`）。
+
 ## Process Management
+- A process is a program in execution.
+    - 系統內的一個單元
+    - Program is a **passive entity**
+    - process is an **active entity**
+- process 需要資源，結束任務後必須釋放資源
+- Single-threaded process 有一個 **program counter**，用於指定要執行的下一條指令的位置
+
+
+
 ## Memory Management
 ## Storage Management
 ## Protection and Security
