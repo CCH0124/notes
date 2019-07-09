@@ -230,3 +230,5 @@ If processes don’t fit in memory, **swapping** moves them in and out to run
 ## Kernel Data Structures
 ## Computing Environments
 ## Open-Source Operating Systems
+## Ref
+[](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/?fbclid=IwAR1wr5Q62scV03fYFSAkax4Z5A_9V0LlqvO6IjJ7cOplwfyiVTOXOugTrD4)
