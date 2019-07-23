@@ -13,6 +13,8 @@
 ## what is a ddos attack
 分佈式拒絕服務（DDoS）攻擊是惡意破壞目標服務器，服務或網絡的正常流量的惡意嘗試，透過大量的 Internet 流量壓倒目標或其周圍基礎架構。DDoS 攻擊透過利用多個受損電腦系統作為攻擊流量來實現有效性。被利用的機器可以包括計算機和其他網絡資源，例如物聯網設備。從高層次來看，DDoS 攻擊就像高速公路堵塞，阻止正常流量到達預期目的地。
 
+![](https://www.cloudflare.com/img/learning/ddos/what-is-a-ddos-attack/ddos-attack-traffic-metaphor.png)
+
 ## How does a DDoS attack work?
 DDoS 攻擊要求攻擊者取得對線上主機網路的控制權以執行攻擊。電腦主機和其他機器（例如物聯網設備）感染了`malware`，將每個機器人變成`bot`(zombie)。然後，攻擊者可以遠程控制一群殭屍程序，這就是所謂的` botnet`。
 botnet 建立之後，攻擊者就可以藉由遠端控制的方式向每個機器發送更新的指令，從而掌控機器。當受害者的 `IP address` 是 botnet 的目標時，每個 bot 程序都會藉由向目標發送請求進行響應，可能導致目標 server 或 network to overflow，從而導致正常流量 ` denial-of-service`。由於每個 bot 都是合法的網路設備，因此將攻擊流量與正常流量分開可能很困難。
@@ -20,7 +22,7 @@ botnet 建立之後，攻擊者就可以藉由遠端控制的方式向每個機�
 ## What are common types of DDoS attacks?
 不同的 DDoS 攻擊向量針對網絡連接的不同組件。為了了解不同的DDoS攻擊如何工作，有必要了解如何建立網絡連接。Internet 上的網路連接由許多不同的組件或"layer"組成。像從頭開始建造房屋一樣，模型中的每一步都有不同的目的。下面顯示的 `OSI model` 是用於描述 7 個不同層中的網路連接的概念框架。
 
-![OSI model](https://www.cloudflare.com/img/learning/ddos/what-is-a-ddos-attack/osi-model-7-layers.svg)
+![OSI model](https://cloudflare.com/img/learning/ddos/what-is-a-ddos-attack/osi-model-7-layers.svg)
 
 雖然幾乎所有的 DDoS 攻擊都涉及壓倒目標設備或帶有流量的網絡，但攻擊可分為三類。攻擊者可能會使用一個或多個不同的攻擊向量，或者可能基於目標所採取的對策措施來循環攻擊向量。
 
