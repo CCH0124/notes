@@ -222,13 +222,38 @@ If processes don’t fit in memory, **swapping** moves them in and out to run
 - process 需要資源，結束任務後必須釋放資源
 - Single-threaded process 有一個 **program counter**，用於指定要執行的下一條指令的位置
 
+作業系統負責以下 process 管理任務
+- Creating and deleting both user and system processes
+- Ensuring that each process receives its necessary resources, without interfering with other processes.
+- Suspending and resuming processes
+- Process synchronization and communication
+- Deadlock handling
 
 
 ## Memory Management
+作業系統負責以下 memory 管理任務：
+- 追蹤當前使用那些 memory 和那些 process
+- 決定那些 process 和資料移入移出 memory 空間
+- 在需要時配置和回收 memory（E.g. new, malloc）
+
 ## Storage Management
+##### File-System Management
+作業系統負責以下 Storage 管理任務：
+- 建立和刪除檔案
+- 建立和刪除組織檔案的目錄
+- 作為處裡檔案和目錄的原始資源
+- 對應檔案到輔助記憶體（secondary storage）
+- 備份檔案到穩定儲存裝置上（發揮法性）
+##### 1.8.2 Mass-Storage Management
+作業系統負責以下 Mass-Storage 管理任務：
+- 可用空間管理
+- 記憶體配置
+- 磁碟排班
+
+>不同大容量存儲設備（floppy disks, hard disks, tape drives, CDs, DVDs 等）之間在尺寸、速度、壽命、安全性和可重寫性方面的變化。
 ## Protection and Security
 ## Kernel Data Structures
 ## Computing Environments
 ## Open-Source Operating Systems
 ## Ref
-[1](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/?fbclid=IwAR1wr5Q62scV03fYFSAkax4Z5A_9V0LlqvO6IjJ7cOplwfyiVTOXOugTrD4)
+[www.cs.uic.edu](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/?fbclid=IwAR1wr5Q62scV03fYFSAkax4Z5A_9V0LlqvO6IjJ7cOplwfyiVTOXOugTrD4)
