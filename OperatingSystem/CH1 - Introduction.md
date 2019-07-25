@@ -251,9 +251,33 @@ If processes don’t fit in memory, **swapping** moves them in and out to run
 - 磁碟排班
 
 >不同大容量存儲設備（floppy disks, hard disks, tape drives, CDs, DVDs 等）之間在尺寸、速度、壽命、安全性和可重寫性方面的變化。
-## Protection and Security
+
+##### Caching
+
+![](https://i.imgur.com/FhQbiYn.png)
+
+Multiprocessor 環境必須在硬體中提供高速緩存一致性，以便所有 CPU 在其高速緩存中具有最新值。
+
+![](https://i.imgur.com/Gp192Pz.png)
+
+##### I/O Systems
+I/O 子系統由幾個組件組成：
+- 包括 buffering、caching 和 spooling 同時周邊作業的 memory management 
+- 通用裝置驅動程式介面
+- 特定硬體裝置程式
+
 ## Kernel Data Structures
+- Lists, Stacks, and Queues
+- Trees
+- Hash Functions and Maps
 ## Computing Environments
-## Open-Source Operating Systems
+- 網絡範圍可以從小型LAN到廣泛的WAN
+  - WAN =廣域網，例如國際公司
+  - MAN =都市區域網絡，覆蓋例如城市規模的區域。
+  - LAN =局域網，典型的家庭，企業，單站點公司或大學校園。
+  - PAN =個人區域網絡，例如您的PC，電話，耳機，汽車等之間的藍牙連接。
+- 網絡訪問速度，吞吐量，可靠性都是重要問題
+- 共享資源可以包括文件、CPU 週期、RAM、打印機和其他資源
+
 ## Ref
 [www.cs.uic.edu](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/?fbclid=IwAR1wr5Q62scV03fYFSAkax4Z5A_9V0LlqvO6IjJ7cOplwfyiVTOXOugTrD4)
