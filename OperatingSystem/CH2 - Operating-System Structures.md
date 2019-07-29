@@ -32,3 +32,54 @@
     - 涉及確保控制對系統資源的所有訪問
   - security
     - 來自外部人員的系統安全性需要用戶身份驗證，擴展到防止外部 I/O 設備進行無效訪問嘗試
+## System Calls
+
+![Example of how system calls are used.](https://i.imgur.com/m0JTRVs.png)
+
+- `system call` 為用戶或應用程序提供一個由 OS 服務的介面
+
+![](https://i.imgur.com/CDrHFlY.png)
+- 使用 `API` 而不是直接系統調用，可以在不同系統之間提供更大的程序可移植性
+  - `API` 透過系統調用接口進行適當的系統調用，使用表查找來訪問特定的編號系統調用
+- 將參數傳遞給 OS 的三種常規方法
+  - 參數傳遞於 `registers` 中
+  - 用 `block`、`table` 儲存的方式存在 memory 中
+    - `block` 的位址是置於 `registers` 的參數傳遞
+    - 程式將參數放置或推入 stack，並由操作系統彈出 stack
+      - 不限制傳遞的參數的數量或長度
+
+![](https://i.imgur.com/PWR3tqS.png)
+
+## Types of System Calls
+- Process control
+  - end, abort
+  - load, execute
+  - create process, terminate process
+  - get process attributes, set process attributes
+  - wait for time
+  - wait event, signal event
+  - allocate and free memory
+  - Dump memory if error
+  - Debugger for determining bugs, single step execution
+  - Locks for managing access to shared data between processes
+- File management
+  - create file, delete file
+  - open, close file
+  - read, write, reposition
+  - get and set file attributes
+- Device management
+  - request device, release device
+  - read, write, reposition
+  - get device attributes, set device attributes
+  - logically attach or detach devices
+- Information maintenance
+  - get time or date, set time or date
+  - get system data, set system data
+  - get and set process, file, or device attributes
+- Communications
+  - create, delete communication connection
+  - send, receive messages if message passing model to host name or process name
+  - From client to server
+  - Shared-memory model create and gain access to memory regions
+  - transfer status information
+  - attach and detach remote devices
