@@ -83,3 +83,9 @@
   - Shared-memory model create and gain access to memory regions
   - transfer status information（傳輸狀況訊息）
   - attach and detach remote devices（連接或移除遠端裝置）
+- Protection
+  - Control access to resources
+  - Get and set permissions
+  - Allow and deny user access
+  
+![Standard C Library Example](https://i.imgur.com/M5d30cW.png)
