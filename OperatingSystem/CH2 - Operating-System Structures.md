@@ -52,34 +52,34 @@
 
 ## Types of System Calls
 - Process control
-  - end, abort
-  - load, execute
-  - create process, terminate process
-  - get process attributes, set process attributes
-  - wait for time
-  - wait event, signal event
-  - allocate and free memory
+  - end, abort（正常結束、中止執行）
+  - load, execute（載入、執行）
+  - create process, terminate process（建立行程、終止行程）
+  - get process attributes, set process attributes（獲取行程屬性、設定行程屬性）
+  - wait for time（等待時間）
+  - wait event, signal event（等待事件、訊號事件）
+  - allocate and free memory（配置及釋放記憶體空間）
   - Dump memory if error
   - Debugger for determining bugs, single step execution
   - Locks for managing access to shared data between processes
 - File management
-  - create file, delete file
-  - open, close file
-  - read, write, reposition
-  - get and set file attributes
+  - create file, delete file（建立檔案、刪除檔案）
+  - open, close file（開啟、關閉）
+  - read, write, reposition（讀、寫、重定位置）
+  - get and set file attributes（獲取、設定檔案屬性）
 - Device management
-  - request device, release device
-  - read, write, reposition
-  - get device attributes, set device attributes
-  - logically attach or detach devices
+  - request device, release device（要求、釋放裝置）
+  - read, write, reposition（讀入、寫出、重定位置）
+  - get device attributes, set device attributes（獲取裝置屬性、設定裝置屬性）
+  - logically attach or detach devices（邏輯上的加入或移除裝置）
 - Information maintenance
-  - get time or date, set time or date
-  - get system data, set system data
-  - get and set process, file, or device attributes
+  - get time or date, set time or date（獲取時間或日期、設定時間或日期）
+  - get system data, set system data（取得系統資料、設定系統資料）
+  - get and set process, file, or device attributes（設定行程、檔案或裝置屬性）
 - Communications
-  - create, delete communication connection
-  - send, receive messages if message passing model to host name or process name
+  - create, delete communication connection（建立、刪除通訊連接）
+  - send, receive messages if message passing model to host name or process name（傳輸、接收訊息）
   - From client to server
   - Shared-memory model create and gain access to memory regions
-  - transfer status information
-  - attach and detach remote devices
+  - transfer status information（傳輸狀況訊息）
+  - attach and detach remote devices（連接或移除遠端裝置）
