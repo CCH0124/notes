@@ -90,3 +90,39 @@
   
 ![Standard C Library Example](https://i.imgur.com/M5d30cW.png)
 
+## System Programs
+- `system program` 又稱 `system utility`，它們提供一些程式開發與執行的便利環境，有些則是使用者和系統呼叫之間的介面
+- `System programs` 可分為這幾類
+  - File management
+    - 用於創建、刪除、複製、重命名、列印，列出和一般操作檔案和目錄的程序
+  - Status information
+    - 用於檢查日期、時間、用戶數、運行進程、數據記錄等的實用程序
+    - 系統註冊表用於儲存和調用特定應用程序的配置訊息
+  - File modification
+    - 文字編輯器和其他可以更改文件內容的工具
+  - Programming-language support
+    - Compilers、linkers、debuggers、profilers、assemblers、library archive management，通用語言的解釋器以及 make 的支持
+  - Program loading and execution
+    - loaders、 dynamic loaders、 overlay loaders 等，以及交互式調試器
+  - Communications
+    - 用於在進程和用戶之間提供連接的程序，包括郵件、Web瀏覽器、遠端登錄、文件傳輸和遠程命令執行。
+  - Background services
+    - System daemons 通常在系統引導時啟動，並在系統運行時運行，處理必要的服務。示例包括 network daemons，列印服務器，process schedulers 和系統錯誤監視服務
+    
+## System Boot
+
+- 在系統上初始化電源時，執行從固定的內存位置開始。
+  - Firmware ROM 用於保存初始 boot code。
+- 必須使 OS 可用於硬體，以便硬體可以啟動它。
+  - 一小段代碼 - 存儲在ROM 或 EEPROM 中的 bootstrap loader 定位內核，將其加載到內存中並啟動它
+  - 有時兩步過程，其中固定位置的 boot block 由 ROM 代碼加載，從 disk 加載 bootstrap loader。
+- 通用 bootstrap loader GRUB 允許從多個 disk、版本、內核選項中選擇內核。
+- 然後運行 Kernel loads 和系統。
+
+[補充](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/2_Structures.html)
+
+- 當系統上電時，會產生一個中斷，將一個儲存器地址加載到 `program counter` 中，系統開始執行在該地址找到的指令。該地址指向位於主板上 ROM 芯片（或EPROM 芯片）中的 `bootstrap` 程序。
+- ROM 引導程序首先運行硬體檢查，確定存在的物理資源以及執行適用的所有 HW 的開機自檢（POST）。某些設備（例如 controller cards）可能具有自己的板載診斷，這些診斷由 ROM 引導程序調用。
+- 用戶通常可以選擇在 POST 過程中按下特殊鍵，如果按下，將啟動 `ROM BIOS` 配置實用程序。此實用程序允許用戶指定和配置某些硬體參數，以查找操作系統的位置以及是否使用密碼限制對該實用程序的訪問。
+  - 某些硬體還可以提供對其他配置設置程序的訪問，例如 `RAID` disk 控制器或某些特殊圖形或網卡。
+- 假設尚未調用該實用程序，則引導程序查找包含 OS 的 non-volatile storage 設備。根據配置，它可能按照 HW 配置實用程序指定的順序查找 floppy drive、CD ROM 驅動器或 primary hard drives 驅動器或 secondary hard drives 驅動器。
