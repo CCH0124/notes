@@ -124,4 +124,4 @@ Process Scheduling 主要是要讓 CPU 保持忙碌，快速切換 CPU 已進行
   - 子進程可能有一個新程序加載到其地址空間，包含所有 `program` 和 `data segments`。這是 Windows 中的 `spawn` 系統調用的行為。UNIX 系統使用 `exec` 系統調用作為第二步實現此目的。
     - Child has a program loaded into it（子進程有一個程式載入其中）
 
-![Process Creation ](https://i.imgur.com/4AC4uEl.png　"Process Creation")
+![Process Creation](https://i.imgur.com/4AC4uEl.png "Process Creation")
