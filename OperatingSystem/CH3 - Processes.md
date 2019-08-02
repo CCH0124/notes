@@ -91,3 +91,37 @@ Process Scheduling 主要是要讓 CPU 保持忙碌，快速切換 CPU 已進行
  ![Queueing-diagram representation of process scheduling](https://i.imgur.com/Re8RSAY.png "Queueing-diagram representation of process scheduling")
  
  ![Addition of a medium-term scheduling to the queueing diagram](https://i.imgur.com/AjSr5ZY.png "Addition of a medium-term scheduling to the queueing diagram")
+
+### Context Switch
+- 每當中斷來時，CPU 必須對當前正在運行的 process 執行狀態保存，然後切換到內核模式以處理中斷，然後對中斷的 process 進行狀態恢復
+- 類似的，當一個 process 的時間配量已到期並且要從 `ready queue` 加載新 process 時，會發生上 **Context Switch**
+  - 這將由定時器中斷發起，然後中斷將導致當前 process 的狀態被保存並且新 process 的狀態將被恢復。
+- 保存和恢復狀態涉及保存和恢復所有暫存器和 program counter，以及上述 `PCB`。
+- **Context Switch** 切換非常頻繁發生，並且執行切換的開銷只是丟失了 CPU 時間，因此 **Context Switch**（狀態保存和恢復）需要盡可能快。
+  - 某些硬體具有加速此操作的特殊規定，例如一次性保存或恢復所有暫存器的單機指令
+## Operations on Processes
+### Process Creation
+- Process 可以透過適當的系統調用創建其他 process，例如 `fork` 或 `spawn`。進行創建的過程稱為另一個過程的父進程（process），稱為其子進程（process）
+- 每個 process 都有一個整數標識符，稱為進程標識符或 `PID`
+  - 為每個 process 儲存父 PID（PPID）
+- 典型 UNIX 系統上，process 調度程序被稱為 **sched**，並且給定 **PID 0**。 它在系統啟動時做的第一件事就是啟動 `init`，它給出了 process **PID 1**。Init 後啟動所有系統守護進程和用戶登錄，並成為所有其他 process 的最終父進程。 下圖顯示了 Linux 系統的典型流程樹
+
+![A Tree of Processes in Linux](https://i.imgur.com/bif4V3H.png "A Tree of Processes in Linux")
+
+- Resource sharing options
+  - 子進程可能會與其父進程接收一些共享資源。子進程可以或可以不限於最初分配給父進程的資源的子集，從而防止失控的子進程消耗所有特定係統資源。
+    - Parent and children share all resources
+    - Children share subset of parent’s resources
+    - Parent and child share no resources
+- 創建子進程後，父進程有兩個選項
+  - 在繼續之前等待子進程終止。對於特定子級或任何子級，父級進行 `wait（）`系統調用，這會導致父進程阻塞，直到 `wait（）` 返回。 UNIX shell 通常會在發出新提示之前等待其子進程完成。
+    - Parent and children execute concurrently（父進程議續執行而子進程也同時執行）
+  - 與子進程同時運行，繼續處理而無需等待。 這是 UNIX shell 將 process 作為後台任務運行時的操作。父進程也可能運行一段時間，然後等待子進程，這可能發生在某種並行處理操作中。（例如，父母可以在不等待任何一個孩子的情況下 `fork` 一些孩子，然後做一些自己的工作，然後等待孩子。）
+    - Parent waits until children terminate（父進程等著他的所有子進程終止後才繼續執行）
+- 子進程相對於父進程的地址空間的兩種可能性
+  - 子進程可以是父進程的精確副本，在內存中共享相同的 `program` 和 `data segments`。每個都有自己的 `PCB`，包括 `program counter`、暫存器和 `PID`。 這是 UNIX 中 fork 系統調用的行為
+    - Child duplicate of parent（子進程是父進程的複製品）
+  - 子進程可能有一個新程序加載到其地址空間，包含所有 `program` 和 `data segments`。這是 Windows 中的 `spawn` 系統調用的行為。UNIX 系統使用 `exec` 系統調用作為第二步實現此目的。
+    - Child has a program loaded into it（子進程有一個程式載入其中）
+
+![Process Creation ](https://i.imgur.com/4AC4uEl.png　"Process Creation")
