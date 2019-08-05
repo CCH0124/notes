@@ -125,3 +125,37 @@ Process Scheduling 主要是要讓 CPU 保持忙碌，快速切換 CPU 已進行
     - Child has a program loaded into it（子進程有一個程式載入其中）
 
 ![Process Creation](https://i.imgur.com/4AC4uEl.png "Process Creation")
+
+## Process Termination
+- Process 可以透過 `exit()` 系統調用來請求它們自己要終止，通常返回一個 `int`。如果它正在執行 `wait()`，則將此 `int` 傳遞給父進程，並且在成功完成時通常為`0`，並且在出現問題時通常為非零代碼。
+- 系統也可以出於各種原因終止 process：
+  - 系統無法提供必要的系統資源
+  - 響應 KILL 命令或其他未處理的 process 中斷
+  - 如果不再需要分配給他們的任務，父進程可以 kill 他們的子進程
+  - 如果父進程退出，系統可能會或可能不會允許子進程在沒有父進程的情況下繼續。（在 UNIX 系統上，孤立進程通常由 `init` 繼承，然後繼續執行它們，UNIX `nohup` 命令允許子進程在父進程退出後繼續執行。）
+- **當進程終止時，其所有系統資源都被釋放**，打開檔案被刷新和關閉等。如果父進程正在等待子進程終止，則進程終止狀態和執行時間將返回到父進程，如果進程變為孤立，則最終返回到 init。（正在嘗試終止但不能因為父進程不等待它們的進程被稱為殭屍。這些進程最終被 init 作為孤兒繼承並被殺死。）
+  - 如果沒有父進程等待，那麼終止進程就是一個 `zombie`
+  - 如果父進程終止，則進程是 `orphans` 的
+>現代 UNIX shell 不會產生與舊系統一樣多的孤兒和殭屍。
+
+## Interprocess Communication
+- Independent Processes
+  - 在系統上同時運行的**獨立進程**是那些既不會影響其他 process 也不會受其他進程影響的 process
+- Cooperating Processes 
+  - 合作行程是指可能影響或受其他 process 影響的 process。允許合作進程的原因有幾個：
+    - Information Sharing
+      - 可能有幾個 process 需要訪問同一檔案。（例如 pipelines）
+    - Computation speedup
+      - 如果問題可以分解為要同時解決的子任務（特別是涉及多個處理器時），通常可以更快的解決問題的解決方案
+    - Modularity
+      - 最有效的架構可能是將系統分解為協同模組。（例如，具有客戶端 - 服務器體系結構的數據庫。）
+    - Convenience 
+      - 即使是單個用戶也可能是多任務的，例如編輯、編譯、列印以及在不同的窗口中運行相同的代碼
+- `Cooperating processes` 需要某種類型的行程間通信，這通常是兩種類型之一：`shared memory` 或 `message passing`。下圖說明了兩個系統之間的區別
+
+![Communications models](https://i.imgur.com/2XtM18S.png "Communications models: (a) Message passing. (b) Shared memory.")
+  
+- Shared Memory
+  - 一旦設置就會更快，因為不需要系統調用，並且以正常的內存速度進行訪問。但是，**設置起來更複雜**，並且在多台計算機上不能正常工作。當必須在同一台計算機上快速共享大量訊息時，`Shared Memory` 通常是首選
+- Message Passing
+  - `Message Passing` 需要對每個訊息傳輸**進行系統調用**，因此速度較慢，但設置起來比較簡單，並且可以在多台計算機上正常工作。當數據傳輸的數量和/或頻率很小時，或者涉及多台計算機時，通常選 `Message Passing`。
