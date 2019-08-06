@@ -51,15 +51,23 @@
 ## 5G 網路架構中主要元件
 
 - Authentication Server Function (AUSF)
+  - 認證服務器功能
 - Access and Mobility Management Function (AMF)
+  - 接入和移動性管理  
 - Data network (DN)
 - Unstructured Data Storage network function (UDSF)
 - Network Exposure Function (NEF)
+  - 網路能力開放
 - NF Repository Function (NRF)
+  - 網路註冊功能
 - Network Slice Selection Function (NSSF)
+  - 網路切片選擇功能
 - Policy Control function (PCF)
+  - 策略控制功能
 - Session Management Function (SMF)
+  - 會話管理
 - Unified Data Management (UDM)
+  - 統一數據管理
 - Unified Data Repository (UDR)
 - User plane Function (UPF)
 - Application Function (AF)
