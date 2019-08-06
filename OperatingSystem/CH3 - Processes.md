@@ -159,3 +159,36 @@ Process Scheduling 主要是要讓 CPU 保持忙碌，快速切換 CPU 已進行
   - 一旦設置就會更快，因為不需要系統調用，並且以正常的內存速度進行訪問。但是，**設置起來更複雜**，並且在多台計算機上不能正常工作。當必須在同一台計算機上快速共享大量訊息時，`Shared Memory` 通常是首選
 - Message Passing
   - `Message Passing` 需要對每個訊息傳輸**進行系統調用**，因此速度較慢，但設置起來比較簡單，並且可以在多台計算機上正常工作。當數據傳輸的數量和/或頻率很小時，或者涉及多台計算機時，通常選 `Message Passing`。
+
+### Shared-Memory Systems 共享記憶體
+- 通常，**要在共享記憶體系統中共享的記憶體最初在特定 process 的地址空間內**，該 process 需要進行系統調用以使該記憶體對一個或多個其他 process 公開可用
+- 其他希望使用共享記憶體的 process 必須進行自己的系統調用，以將共享記憶體區域連接到其地址空間
+- 通常，首先必須在 `cooperating processes` 之間來回傳遞一些消訊息，以便建立和共享記憶體訪問
+
+### Message-Passing Systems 訊息傳遞
+- 消息傳遞系統必須至少支持系統調用"send message"和"receive message"
+- 在發送消息之前，必須在 `cooperating processes` 之間建立通訊連線
+- 在消息傳遞系統中有三個要解決的關鍵問題
+  - Direct or indirect communication（直接聯繫）
+  - Synchronous or asynchronous communication（同步或非同步）
+  - Automatic or explicit buffering（自動或明確緩衝）
+
+##### Naming
+- 透過直接聯繫，發送方必須知道向發送消息的接收方的名稱
+  - 每個發送者 - 接收者對之間存在一對一的連接
+  - 對於對稱通訊，接收方還必須知道從其接收消息的發送方的特定名稱
+    - 對於非對稱通信，這不是必需的
+- 間接通訊使用共享郵箱或端口（port）
+  - 多個 process 可以共享相同的郵箱
+
+##### Synchronization
+- 無論是發送或接收消息（或者都不是或兩者）的可以是 `blocking`  或 `non-blocking`，也稱為 `synchronous` 和 `asynchronous`
+
+##### Buffering
+- 消息透過隊列（queue）傳遞，隊列可能具有三種容量配置之一
+  - Zero capacity（零容量）
+    - 消息無法儲存在隊列中，因此發送方必須 `blocking`，直到接收方接受消息。
+  - Bounded capacity（有限的容量）
+    - 隊列中存在一定的預設有限容量。如果隊列已滿，發送發必須 `block`，直到隊列中的空間可用，否則可能是 `block` 或 `non-block`
+  - Unbounded capacity （無限制的容量）
+    - 隊列具有理論上的無限容量，因此發送者永遠不會被強制 `block`
