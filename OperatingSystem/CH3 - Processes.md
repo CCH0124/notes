@@ -192,3 +192,27 @@ Process Scheduling 主要是要讓 CPU 保持忙碌，快速切換 CPU 已進行
     - 隊列中存在一定的預設有限容量。如果隊列已滿，發送發必須 `block`，直到隊列中的空間可用，否則可能是 `block` 或 `non-block`
   - Unbounded capacity （無限制的容量）
     - 隊列具有理論上的無限容量，因此發送者永遠不會被強制 `block`
+
+## Communication in Client-Server Systems
+### Sockets
+- Socket 是通訊的端點
+
+![](https://i.imgur.com/qnLcIvM.png)
+
+### Remote Procedure Calls（RPC）
+- 遠程過程調用（RPC）在網路系統上的進程之間抽象過程調用
+
+![](https://i.imgur.com/69X5cTI.png)
+
+### Pipes
+![](https://i.imgur.com/qxZdN5h.png)
+
+### Remote Method Invocation（RMI）
+- RMI 是 RPC 的 Java 實現，用於聯繫在不同的 Java 虛擬機 JVM 上運行的進程，JVM 可能在不同的物理機器上運行，也可能不運行。
+- RPC 和 RMI之間存在兩個主要區別，兩者都基於 Java 的 object-oriented 特性：
+  - RPC 在過程編程範例中訪問遠程過程或函數。RMI 訪問遠程對像中的方法。
+  - RPC 作為函數參數傳遞的數據僅為普通數據，即整數，浮點數，雙精度等。RMI 還支持對象的傳遞。
+
+![](https://i.imgur.com/5LsGzWs.png)
+
+![](https://i.imgur.com/bKCsXUM.png)
