@@ -1,6 +1,9 @@
 - Glossary.md
+- vCPE.md
 - RAN EPC.md
 - Key Technologies.md
-- NFV diff VNF.md	Create NFV diff VNF.md	yesterday
+- NFV diff VNF.md	
 - Network Slices.md
 - works.md
+- Energy Efficiency.md
+- Reliability.md
