@@ -84,3 +84,4 @@ vCPE 是 NFV 的最佳用例，SD-WAN 是 vCPE 的最佳用例。因此，我們
 ## Ref
 [原文](https://www.lanner-america.com/blog/vcpe-virtualizing-cpe/)
 [參考](https://www.sdnlab.com/23409.html)
+[5G边缘网络虚拟化的利器：vCPE和SD-WAN](https://www.sdnlab.com/23406.html)
