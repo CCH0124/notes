@@ -1,1 +1,2 @@
-[邁向全IP/扁平化架構　LTE/SAE掀行動網路新革命](https://www.2cm.com.tw/2cm/zh-tw/magazine/-Technology/21BEA249D56C45D29E83A2E6DF539AD8)
+- [邁向全IP/扁平化架構　LTE/SAE掀行動網路新革命](https://www.2cm.com.tw/2cm/zh-tw/magazine/-Technology/21BEA249D56C45D29E83A2E6DF539AD8)
+- [NAS/MAC/PHY各司其職　LTE通訊協定預埋4G伏筆](https://www.2cm.com.tw/2cm/zh-tw/magazine/-Technology/848B4DFB7B584537B42D0006E1EB6523)
