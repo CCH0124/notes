@@ -5,6 +5,7 @@
 ## Table Content
 - Glossary.md
 - vCPE.md
+- [vEPC](https://www.2cm.com.tw/2cm/zh-tw/magazine/-Technology/EE1AD67D7C08456CAE1D35B89F89AACE)
 - RAN EPC.md
 - Key Technologies.md
 - NFV diff VNF.md	
