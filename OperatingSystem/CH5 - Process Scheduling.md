@@ -92,4 +92,45 @@ CPU 排班決策發生在以下四種情況：
   - 考慮一個 CPU-bound 和許多 I/O-bound 的 process
   - 當所有其他 process 都在等待一個大 process 離開 CPU 的時候，會產生此現象
 
+### Shortest-Job-First Scheduling, SJF
+- 將每一個 process 的下一個 CPU 分割長度和該 process 相結合
+  - 當 CPU 有空時，指定給下個 CPU 分割最短的 process
+- 基於下一個最短的 CPU 突發而不是整個處理時間來選擇一個 proceess
 
+|process|Brust Time|
+|---|---|
+|P1|6|
+|P2|8|
+|P3|7|
+|P4|3|
+
+![](https://i.imgur.com/ZDCllOM.png)
+
+平均等待時間為 `(0 + 3 + 9 + 16)/4=7 ms`，較 FCFS 短
+
+- SJF 可以被證明是最快的排班演算法，但是它遇到了一個重要的問題：你怎麼知道下一個 CPU 突發將持續多長時間（如何得知下一個 CPU 要求長度）
+- 對於長期排班來說，可以根據用戶在提交作業時為其工作設置的限制來完成，使用 process 時間限制。但如果他們將限制設置得太低，他們就不得不重新提交作業F 
+- SJF 不適用 `short-term CPU scheduling`（短程排班） 
+- 更實際的方法是基於該過程的最近突發時間的一些歷史測量來**預測**下一突發的長度。一種簡單、快速且相對準確的方法是**指數平均**值，其可以定義如下。
+
+![](https://i.imgur.com/4FxswX2.png)
+通常 `α set to ½`
+
+在該方案中，先前的估計包含所有先前時間的歷史，並且 `α` 用作近期數據與過去歷史的相對重要性的加權因子。如果 `α` 為 1.0，則忽略過去的歷史，並且我們假設下一個突發將與最後一個突發的長度相同。如果 `α` 為0.0，則忽略所有測量的突發時間，我們假設一個恆定的突發時間。最常見的 `α` 設置為 0.5，如圖5.3所示：
+
+![](https://i.imgur.com/VbZmpVR.png)
+
+- SJF 可以是**搶先**也可以是**非搶先**。當新 process 到達就緒隊列時發生搶占（新到 process 會搶在目前正在執行 process 之前執行），該就緒隊列的預測突發時間短於突發當前在 CPU 上的進程中剩餘的時間。搶先式 SJF 有時被稱為 `shortest remaining time first scheduling`（剩餘的時間最短的先做）
+
+|Process|Arrival Time| Burst Time|
+|---|---|---|
+|P1|0|8|
+|P2|1|4|
+|P3|2|9|
+|p4|3|5|
+
+![](https://i.imgur.com/Wde1xiG.png)
+
+`平均到達時間 = [(10-1)+(1-1)+(17-2)+5-3)]/4 = 26/4 = 6.5 msec`
+
+###  Priority Scheduling
