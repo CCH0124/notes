@@ -159,4 +159,38 @@ CPU 排班決策發生在以下四種情況：
   - 解決方案 Aging-隨著時間的推移，增加了 process 的優先權
 
 ### Round Robin Scheduling 依序循環之排班方式
+- 為分時作業系統設計
+- 循環排班類似於 FCFS 排班，除了 CPU 突發被分配了稱為*時間量(time quantum)* 的限制
+  - 通常為 10-100 毫秒。經過這段時間後，該 procedd 被搶先並添加到就緒隊列(ready queue)的末尾
+- 當給 CPU 一個 process 時，為一個時間量設置的值設置一個計時器
+  - 如果 process 在時間量的計時器到期之前完成其突發，那麼它就像普通的 FCFS 演算法一樣被換出 CPU
+  - 如果計時器先關閉，則該 process 將從 CPU 中換出並移至就緒列隊(ready queue)的後端，這之間會有 `context switch`
+- 就緒列隊 (ready queue) 保持為一個循環列隊，因此當所有進程都輪流時，排班程序會將第一個 process 轉為另一個順序，依此類推
+- 雖然平均等待時間可能比其他排班演算法長，但 RR 排班可以使所有處理器平均共享 CPU 的效果。在以下示例中，平均等待時間為 `5.66 ms`
 
+|Process|Burst Time|
+|---|---|
+|P1|24|
+|P2|3|
+|P3|3|
+
+![](https://i.imgur.com/SUKUILV.png)
+
+- RR 的性能對所選擇的時間量敏感。如果時間量足夠大，則 RR 減少到 FCFS 算法;如果它非常小，則每個 process 獲得處理器時間的 `1/n` 並平均共享 CPU 。但是，真實系統會為每個 `context switch` 調用開銷，並且時間量越小，上下文切換越多。（見下圖）大多數現代系統使用 10 到 100 毫秒之間的時間量，`context switch` 時間大約為 10 微秒，因此相對於時間量，開銷很小。
+
+![](https://i.imgur.com/UPjFsCY.png)
+
+- 周轉時間也隨著時間量時間而變化，以非明顯的方式。例如，考下圖所示的過程：
+
+![](https://i.imgur.com/WbvWiOl.png "Turnaround Time Varies With The Time Quantum")"80% of CPU bursts should be shorter than q"
+
+- 通常，如果大多數 process 在一個時間量內完成下一個 cpu 突發，則周轉時間最小化。 例如，對於每個 10 毫秒突發的三個 process，1 毫秒時間量的平均周轉時間為 29，並且對於 10 毫秒時間量，它減少到 20。但是，如果它太大，那麼 RR 就會退化為 FCFS。 根據經驗，80％ 的 CPU 突發應該小於時間量。
+
+### Multilevel Queue Scheduling(多層佇列排班方式)
+- 當可以容易對 process 進行分類時，可以建立多個單獨的列隊，每個列隊實現最適合於該類型的作業的任何排班演算法，和/或具有不同的參數調整
+- 還必須在列隊之間進行調度，即調度一個列隊以獲得相對於其他列隊的時間。兩個常見選項是嚴格優先權（較低優先權列隊中的作業不會運行，直到所有較高優先權列隊都為空）和 round-robin（每個列隊依次獲得時間片(time slice 或時間量)，可能具有不同的大小。）
+- 請注意，在此算法下，作業無法從列隊切換到列隊 - 一旦為列隊分配了列隊，這就是他們的列隊，直到完成為止
+
+![](https://i.imgur.com/Pz7uj2W.png)
+
+### Multilevel Feedback Queue (多層回饋佇列之排班方式)
