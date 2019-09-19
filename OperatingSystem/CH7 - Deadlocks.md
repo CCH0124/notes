@@ -107,3 +107,23 @@
 如果 process P2 請求並再被授予一個磁帶驅動器，上面的表會發生什麼？
 
 - 安全狀態方法的關鍵是當對資源發出請求時，僅當結果分配狀態是安全的時才授予請求
+
+### 7.5.2 Resource-Allocation Graph Algorithm(資源配圖演算法)
+- 如果資源類別只有其資源的單個實例，則可以透過資源分配圖中的循環檢測 deadlock 狀態
+- 透過申請邊(claim edge)的資源分配圖來是別和避免不安全狀態
+- 當 process 發出請求時，申請邊 `Pi-> Rj` 將轉換為請求邊。類似的，當資源被釋放時，分配將恢復為申請邊
+- 這種方法的工作原理是拒絕在資源分配圖中產生週期的請求，使申請邊生效
+- 申請邊 `Pi->Rj` 表示 process `Pj` 可以請求資源 `Rj`(用虛線表示)
+- 當 process 請求資源時，申請邊轉換為請求邊
+- 將資源分配給 process 時，請求邊轉換為分配邊
+- 當進程釋放資源時，分配邊將重新轉換為申請緣
+- 必須在系統中事先聲明資源
+- 例如，考慮當 process P2 請求資源 R2 時會發生什麼：
+
+![](https://i.imgur.com/5chrqhd.png "Resource-Allocation Graph")
+
+- 生成的資源分配圖將在其中有一個循環，因此無法授予請求
+
+![](https://i.imgur.com/906SdFO.png "Unsafe State In Resource-Allocation Graph")
+
+### 7.5.3 Banker's Algorithm(銀行家演算法)
