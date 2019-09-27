@@ -80,4 +80,15 @@
 
 ### 8.2.2 Swapping on Mobile Systems 
 ## 8.3 Contiguous Memory Allocation(連續記憶體配置)
+- 一種記憶體管理方法是將每個 process 載入到一個連續的空間中。通常先在低記憶體位置或高記憶體位置為作業系統分配空間，然後根據需求將剩餘的可用記憶體分配給 process。
 
+### 8.3.1 Memory Protection (記憶體保護)
+- 重定位暫存器(Relocation registers)用於保護用戶 process 彼此之間以及更改 OS 代碼和數據時相互保護
+  - 基址暫存器(Base register)包含最小實體位址的值
+  - 限制暫存器(Limit register)包含邏輯位址範圍 – 每個邏輯位址必須小於限制暫存器
+  - MMU 動態映射邏輯位址
+  - 然後可以允許像是內核代碼是暫態(transient)的和內核大小改變之類的動作
+- 下圖中所示的系統可以防止使用者程序訪問不應訪問的區域，允許根據需要將程序重定位到不同的記憶體起始地址，並允許專用於 OS 的記憶體空間隨著需求的變化而動態增長或縮小
+- MMU 藉著加上重新定位暫存器中的值來動態的重新定位，這個對應位址於是被傳送到記憶體
+
+![](https://i.imgur.com/cQIQSzm.png "Hardware Support for Relocation and Limit Registers")
