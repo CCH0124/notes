@@ -92,3 +92,19 @@
 - MMU 藉著加上重新定位暫存器中的值來動態的重新定位，這個對應位址於是被傳送到記憶體
 
 ![](https://i.imgur.com/cQIQSzm.png "Hardware Support for Relocation and Limit Registers")
+
+### 8.3.2 Memory Allocation (記憶體配置)
+- 分配連續記憶體的一種方法是將所有可用記憶體劃分為大小相等的分區，並將每個 process 分配給它們自己的分區
+  - 這限制了同時進行的 process 數量和每個 process 的最大大小，並且不再使用
+- 另一種方法是保留未使用的（空閒）記憶體區塊（稱：洞）列表，並在需要將 process 載入到記憶體時查找合適大小的洞
+- 有許多不同的策略可以找到 process 的"最佳"記憶體分配，包括最常討論的三種：
+1. First fit (最先配分) 
+搜索洞列表，直到分配足夠大的第一個洞
+2. Best fit (最佳配分)
+分配足夠大的最小洞，必須搜索整個列表，除非按大小排序。會產生最小的剩餘洞，而浪費
+3. Worst fit (最差配分)
+分配最大的洞，還必須搜索整個列表。會產生最大的剩餘洞
+
+模擬顯示，就時間和儲存利用率而言，`First fit` 或 `Best fit` 比 `Worst fit`。就儲存利用率而言，`First fit` 和 `Best fit` 的數量相等，但是 `First fit` 的速度更快。
+
+### 8.3.3. Fragmentation (斷裂)
