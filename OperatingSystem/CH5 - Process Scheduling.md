@@ -78,7 +78,7 @@ CPU 排班決策發生在以下四種情況：
 
 在下面的第一個甘特圖中，流程 P1 首先到達。三個進程的平均等待時間為（0 + 24 + 27）/ 3 = 17.0 ms。
 
-![](https://i.imgur.com/Jq9CL1W.png)
+![](https://i.imgur.com/chFrbUm.png)
 
 各 process 等待時間：P1=0; P2=24; P3=27
 
