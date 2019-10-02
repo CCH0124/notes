@@ -123,7 +123,49 @@
 >請注意，硬碟驅動器也會產生相同的效果，並且現代硬體為我們提供了越來越大的驅動器和記憶體，而以越來越大的區塊大小為代價，這表示更多的記憶體因內部碎片而丟失
 
 >外部碎片：存在滿足請求的總記憶體空間，但不是連續的
+
 >內部碎片：分配的記憶體可能比請求的記憶體大，這種大小差異是分區內部的記憶體，但未被使用
 
 ## 8.4 Segmentation(分段)
+### 8.4.1 Basic Method(基本方法)
+- 大多數使用者（程序員）並不認為他們的程序存在於一個連續的線性位址空間中
+- 相反，他們傾向於在多個**分段**中考慮其記憶體，每個分段專用於特定用途，例如 code、data、stack、heap 等
+- 記憶體**分段**透過為位址提供分段編號（映射到分段基底位址）和距離該分段開頭的偏移量來提供此視圖
+- 例如，C 編譯器可能會為用戶代、，library 代碼、全域（靜態）變量、stack 和 heap 生成 5 個分段，如下圖所示：
+![](https://i.imgur.com/NcHWvCr.png "User’s View of a Program")
 
+![](https://i.imgur.com/NarhWys.png "Logical View of Segmentation")
+
+### 8.4.2 Segmentation Hardware(分段硬體)
+- 邏輯位址考慮以下元組
+```		
+<segment-number, offset>,
+```
+- 分段表(segment table)將分段偏移位址映射到物理位址，並使用類似於前面討論的 page table 和重定位暫存器(relocation base registers)的系統同時檢查無效位址
+
+- Segment table 映射二維物理位址。每個表條具有：
+  - base 
+    - 包含分段駐留在記憶體中的起始物理位址
+  - limit 
+    - 指定分段的長度
+
+- 分段表基底位址暫存器（STBR,Segment-table base register）
+  - 指向分段表在記憶體中的位置
+- 分段表長度暫存器（STLR,Segment-table length register）
+  - 指示程式使用的分段數量
+- 如果 `s<STLR`，則分段號 `s` 是合法的
+
+> 在目前的分段討論中，每個分段都保存在連續的記憶體中，並且可能具有不同的大小，但是分段也可以與分頁(paging)結合使用。
+
+![](https://i.imgur.com/nkyx9yx.png "Segmentation Hardware")
+從上圖可以知道，一個邏輯位址包含兩個元組：分段號碼 `s`；進入該分段的偏移量 `d`。
+- 分段號碼
+  - 指向分段表的索引
+- 偏移量
+  - 介於 0 和分段界線值之間
+  
+![](https://i.imgur.com/9pWmy7q.png "Example of segmentation")
+上圖有 0 - 4 的 5 個分段。
+如第二段有 400 字長，從 4300 位置開始。因此對此段中的第 53 個字參考，會映射到位置 4300 + 53 上
+
+## Paging(分頁)
