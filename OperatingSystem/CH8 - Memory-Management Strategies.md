@@ -169,3 +169,19 @@
 如第二段有 400 字長，從 4300 位置開始。因此對此段中的第 53 個字參考，會映射到位置 4300 + 53 上
 
 ## Paging(分頁)
+- 分頁是一種記憶體管理方案，它允許 process 物理記憶體不連續，透過在相等大小的區塊（稱為 *pages*）中分配記憶體來消除碎片問題
+  - 只要有可用的物理記憶體，就為 process 分配實體記憶體
+    - 避免外部碎片
+    - 避免了大小不同的記憶體區塊的問題
+- 是當今使用的主要記憶體管理技術
+
+### 8.5.1 Basic Method(基本方法)
+- 分頁背後的基本思想是將實體記憶體劃分為多個大小相等的區塊稱為**欄(frame)** ，並將程序邏輯儲存空間劃分為相同大小的區塊稱為**頁(page)**
+  - frame 大小為 2 的次方，介於 512bytes 和 16MB 之間
+  - page 追蹤所有空閒的 `frame`
+- 任何 `page`（來自任何 process）都可以放入任何可用 `frame` 中
+- **page table**用於查找當前特定 `page` 儲存在哪個 `frame` 中。例如，在下面示例中，程序邏輯記憶體的第 2 頁當前儲存在實體記憶體的第 3 欄中：
+
+![](https://i.imgur.com/B9qEiN0.png "Paging hardware")
+
+![](https://i.imgur.com/0ugU6al.png "Paging model of logical and physical memory")
