@@ -185,3 +185,15 @@
 ![](https://i.imgur.com/B9qEiN0.png "Paging hardware")
 
 ![](https://i.imgur.com/0ugU6al.png "Paging model of logical and physical memory")
+
+- 邏輯位址由兩部分組成：位址所在的頁數(page number)(p)，以及距該頁開頭的偏移量(page offset)(d)
+  - 頁數中的位數限制單個 process 可以處理的頁數量。偏移量中的位數確定每頁的最大大小，並且應與系統欄(frame)大小相對應
+- 分頁表(page table)將頁數映射到欄(frame)，以產生一個實體位址，該位址也分為兩部分：
+  - 欄數
+  - 該欄內的偏移量
+  - 欄中的位數確定系統可以尋址的欄數，而偏移量中的位數確定每個欄的大小
+- 頁數(page number)、欄數(frame numbers)和欄大小(frame sizes)由架構確定，但通常為 2 的次方，從而允許將位址拆分為一定數量的 bit
+  - 例如，如果邏輯位址大小為 `2^m`，頁大小為 `2^n`，則邏輯位址的高階 `m-n` 位指定頁數，其餘 `n` 位代表偏移量
+- 頁數中的位數和欄數中的位數不必相同。 前者確定邏輯位址空間的位址範圍，後者與實體位址空間有關
+
+![](https://i.imgur.com/3NZ243R.png "Address Translation Scheme")
