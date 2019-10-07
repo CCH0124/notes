@@ -197,3 +197,38 @@
 - 頁數中的位數和欄數中的位數不必相同。 前者確定邏輯位址空間的位址範圍，後者與實體位址空間有關
 
 ![](https://i.imgur.com/3NZ243R.png "Address Translation Scheme")
+
+- 考慮以下示例，其中一個 process 具有 16bytes 的邏輯記憶體，並在 4byte 的 page 中映射到 32bytes 的實體記憶體。  
+  - 邏輯位址 3 第 0 頁偏移量 3，對應實體位址 23[=(5\*4)+3]
+  
+![](https://i.imgur.com/1RNY3p0.png "Paging Example")
+
+- paging 就像有一張重定位暫存器表， logical memory 的每一頁一個。
+- paging 沒有外部碎片(external fragmentation)
+  - 所有的實體記憶體區塊都被使用，並且兩者之間沒有間隙，也沒有為特定的記憶體區塊找到適合大小的洞(hold)的問題
+- 但是，內部存在碎片。記憶體是按 page 大小分區塊分配的，平均而言，最後一頁(page)僅佔一半，而每個 process 平均浪費一半的記憶體
+  - 如果 process 將其代碼和數據儲存在單獨的 page 中，則可能更多內部碎片
+  - 分配以**欄**為單位
+- 較大的 page 大小會浪費更多的記憶體，但是在開銷方面更有效
+  - 現代趨勢一直是增加 page 大小，有些系統甚至具有多個 page 大小，以嘗試兼顧兩者
+- 頁表條目（欄號）通常是 32bit 數字，允許訪問 `2^32` 個實體頁欄
+  - 如果這些欄的大小均為 `4KB`，表示有 16TB 的可尋址實體記憶體
+  - 32+12=44bit 實體位址空間
+- 當 process 請求記憶體時（例如，從硬碟加載其代碼時），從空閒欄列表中分配空閒欄，並將其插入到該  process 的頁表中
+- process 被阻止訪問其他任何人的記憶體，因為它們的所有記憶體請求都**透過其頁表進行映射**，他們無法生成映射到任何其他 process 的記憶體空間的位址
+- OS 必須追蹤每個單獨 process 的頁表，在 process 的 page 移入和移出記憶體時進行更新，並在處理 `system call` 特定 process 時應用正確的頁表
+  - 所有這些都增加了在 CPU 內外交換 process 時所涉及的開銷。（必須更新當前活動頁面表以反映當前正在運行的 process。）
+  
+ ![](https://i.imgur.com/NNSNt0F.png "Free Frames")
+ 
+- 計算內部碎片
+  - Page size  = 2,048 bytes
+  - Process size = 72,766 bytes
+  - 35 pages + 1,086 bytes
+  - 2,048 - 1,086 = 962 bytes 的內部碎片
+  - 最壞情況的碎片 = 1 frame – 1 byte
+  - 平均碎片 = 1/2 frame size
+  - 但是每個頁表項都需要記憶體來追蹤
+  - 頁面大小隨時間增長
+- process 視圖和實體記憶體現在大不相同
+- 透過實現 process 只能訪問自己的記憶體
