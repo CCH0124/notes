@@ -270,5 +270,22 @@
 ![](https://i.imgur.com/80MUmnV.png)
 
 ### 8.5.3 Protection
+- 分頁表(page table)還可以幫助防止 process 訪問它們不應該訪問的記憶體，或者以不應該訪問的方式訪問自己的記憶體
+- 可以向分頁表中添加一個或多個 bit，將分頁(page)分類為 `read-write`、`read-only`、`read-write-execute` 或這些種類的某種組合
+  - 可以檢查每個記憶體參照，以確保它以適當的模式訪問記憶體
+- 可以將 `valid/invalid` bit 添加到分頁表中當前 process 未使用的 "mask off" 條目中，如下圖所示
+![](https://i.imgur.com/togHIwt.png "Valid (v) or Invalid (i) Bit In A Page Table")
+- 許多 process 沒有使用所有可用的分頁表，特別是在具有很大潛在分頁表的現代系統中
+  - 某些系統不是透過為每個 process 創建一個完整的分頁表來浪費記憶體，而是使用**分頁表長度暫存器(page-table length register, PTLR)** 來指定分頁表的長度。
 
-      - 
+>因為內部碎片(internal fragmentation)，上述 `valid/invalid` bit 無法阻止所有非法記憶體訪問。最後的 page 中的內存區域未被 process 完全持有，並且可能包含最後使用該欄的人留下的數據
+
+### 8.5.4 Shared Pages (共用分頁)
+- 透過簡單的在多個頁欄(page frames)中複製頁號(page numbers)，分頁系統(Paging systems)可以非常輕鬆的共享記憶體區塊
+  - 可用代碼或數據來完成
+- 如果代碼是**可重進入**的，表示它不會以任何方式寫入(唯讀)或更改代碼（它是非自行修改的），因此可以安全重新輸入它。更重要的是，也表示代碼可以由多個 process 共享，只要每個 process 都有自己的數據和暫存器拷貝（包括指令暫存器）即可
+- 下面示例中，三個不同的使用者同時運行編輯器，但是代碼僅一次加載到記憶體中（在頁欄(page frames)中）
+![](https://i.imgur.com/6dTgXBa.png "Sharing of code in a paging environment")
+
+## 8.6 Structure of the Page Table (分頁表的結構)
+
