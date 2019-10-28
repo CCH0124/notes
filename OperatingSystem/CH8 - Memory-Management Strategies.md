@@ -1,9 +1,9 @@
-## 8.1 Background
+## Background
 - 明顯的，*記憶體訪問*和*記憶體管理*是現代電腦系統機操作中非常重要的部分。每條指令必須先從記憶體中取出才能執行，且大多數指令都涉及從記憶體中檢索數據或將數據儲存在記憶體中，或兩者都有
 - multi-task OS 的出現增加了記憶體管理的複雜性，因為隨著 process 在 CPU 進出的交換，因此它們的代碼和數據必須在記憶體內進出交換，這些都是快速，並且不會干擾任何其他 process
 - Shared memory、virtual memory，將記憶體分類為只讀與讀寫的概念以及像是寫時復制分叉之類的概念使問題進一步複雜化
 
-### 8.1.1 Basic Hardware(基本硬體)
+### Basic Hardware(基本硬體)
 - CPU 只能訪問其暫存器和主記憶體
   - 例如，它不能直接訪問硬碟驅動，因此儲存在硬碟驅動上的所有數據必須先轉移到主記憶體芯片中，然後 CPU 才能使用它。
   - 設備驅動程序透過中斷和"記憶體"訪問與其硬體進行通訊，例如：發送簡短指令以將數據從硬碟驅動傳輸到主記憶體中的指定位置。磁碟控制器監視匯流排以獲取此類指令，傳輸數據然後透過另一個中斷通知 CPU 數據在那，但 CPU 從不直接訪問磁碟。
@@ -20,7 +20,7 @@
 - 作業系統顯然可以訪問所有現有的記憶體位置，只有 OS 能夠執行於 kernel model 之中，因為這對於將用戶的代碼和數據交換進出記憶體是必需的
 - 明顯的，更改基底暫存器和界限暫存器的內容是一項特權動做，僅允許 OS kernel 使用
 
-### 8.1.2 Address Binding(位址連接)
+### Address Binding(位址連接)
 使用者行程通常使用符號名稱（例如 "i"、"count" 和 "averageTemperature"）引用記憶體地址。這些符號名稱必須映射或連接(bind)到實體記憶體地址，這通常分幾個階段進行：
 - Compile Time 
   - 如果在編譯時知道程式在實體記憶體中位置，則編譯器可以生成包含實際實體地址的絕對代碼(absolute code)
@@ -35,7 +35,7 @@
 
 ![](https://i.imgur.com/Fb2tu3h.png "Multistep Processing of a User Program")
 
-### 8.1.3 Logical Versus Physical Address Space(邏輯位址空間和實體位址空間) 
+### Logical Versus Physical Address Space(邏輯位址空間和實體位址空間) 
 - CPU 產生的地址是*邏輯位址*，而記憶體硬體實際看到的地址是*實體位址*。
 - 在編譯時或加載時綁定的地址具有相同的邏輯和實體位址
 - 但是，在執行時創建的位址具有不同的邏輯和實體位址
@@ -51,7 +51,7 @@
 
 >用戶程式永遠不會看到實體位址。用戶程式完全在邏輯位址空間中工作，並且任何記憶體引用或操作均使用純邏輯位址完成。僅當位址發送到實體記憶體芯片時，才會產生實體記憶體位址。
 
-### 8.1.4 Dynamic Loading(動態載入)
+### Dynamic Loading(動態載入)
 - 動態載入而不是立即將整個程式載入到記憶體中，而是在調用每個常式時載入它們
 - 優點是無需載入未使用的常式，從而減少了總記憶體使用量並縮短了程式啟動時間
 - 缺點是增加了複雜性和開銷，即檢查常式是否在每次調用時都已載入，如果尚未載入則將其載入
@@ -62,11 +62,11 @@
   - 該方法節省了硬碟空間，因為不需要將常式完全包含在可執行模組中，而僅將記號(stub)包含在常式中
   - 動態鏈結庫（DLL，在 UNIX 系統上也稱為共享庫(shared library)或共享對象）的另一個好處是易於升級和更新。當程式使用標準庫中的常式並且常式進行了更改時，則必須重新構建（重新鏈接）該程式以合併更改。但如果使用 DLL，則只要記號(stub)沒有變化，就可以僅通過將 DL L的新版本加載到系統上來更新程序。版本訊息同時在程式和 DLL 中維護，以便程式可以在必要時指定 DLL 的特定版本
 
-## 8.2 Swapping(置換)
+## Swapping(置換)
 - 必須將一個 process 加載到記憶體中才執行
 - 如果沒有足夠的記憶體將所有正在運行的 process 同時保留在記憶體中，則某些當前未使用 CPU 的 process 可能會將其記憶體換出到稱為*備份儲存體(backing store)* 的 fast 本地硬碟中
 
-### 8.2.1 Standard Swapping(標準置換)
+### Standard Swapping(標準置換)
 - 如果使用了編譯時或加載時位址綁定，則必須將 process 交換回原來的交換位置。如果使用執行時間綁定，則可以將 process 交換回任何可用位置
 - 與其他操作相比，交換(swapping)是一個非常緩慢的過程。例如，如果用戶 process 佔用了 10MB 並且備份儲存體的傳輸速率為每秒 40MB，則僅需要 1/4秒（250毫秒）即可完成數據傳輸。再加上 8 毫秒的等待時間滯後並暫時忽略了 head seek 時間，並且進一步識別到交換涉及將舊數據和新數據移出，此交換所需的總傳輸時間為 512 毫秒，或半秒以上。為了有效進行處理器調度，CPU time slice 應比此丟失的傳輸時間長得多
 - 為了減少交換傳輸開銷，希望傳輸盡可能少的訊息，這要求系統知道 process 正在使用多少記憶體，而不是可能使用多少記憶體。程式員可以透過釋放不再使用的動態記憶體來提供幫助
@@ -78,11 +78,11 @@
   
 ![](https://i.imgur.com/3T4qTEd.png "Schematic View of Swapping")
 
-### 8.2.2 Swapping on Mobile Systems 
-## 8.3 Contiguous Memory Allocation(連續記憶體配置)
+### Swapping on Mobile Systems 
+## Contiguous Memory Allocation(連續記憶體配置)
 - 一種記憶體管理方法是將每個 process 載入到一個連續的空間中。通常先在低記憶體位置或高記憶體位置為作業系統分配空間，然後根據需求將剩餘的可用記憶體分配給 process。
 
-### 8.3.1 Memory Protection (記憶體保護)
+### Memory Protection (記憶體保護)
 - 重定位暫存器(Relocation registers)用於保護用戶 process 彼此之間以及更改 OS 代碼和數據時相互保護
   - 基址暫存器(Base register)包含最小實體位址的值
   - 限制暫存器(Limit register)包含邏輯位址範圍 – 每個邏輯位址必須小於限制暫存器
@@ -93,7 +93,7 @@
 
 ![](https://i.imgur.com/cQIQSzm.png "Hardware Support for Relocation and Limit Registers")
 
-### 8.3.2 Memory Allocation (記憶體配置)
+### Memory Allocation (記憶體配置)
 - 分配連續記憶體的一種方法是將所有可用記憶體劃分為大小相等的分區，並將每個 process 分配給它們自己的分區
   - 這限制了同時進行的 process 數量和每個 process 的最大大小，並且不再使用
 - 另一種方法是保留未使用的（空閒）記憶體區塊（稱：洞）列表，並在需要將 process 載入到記憶體時查找合適大小的洞
@@ -107,7 +107,7 @@
 
 模擬顯示，就時間和儲存利用率而言，`First fit` 或 `Best fit` 比 `Worst fit`。就儲存利用率而言，`First fit` 和 `Best fit` 的數量相等，但是 `First fit` 的速度更快。
 
-### 8.3.3. Fragmentation (碎片)
+### Fragmentation (碎片)
 - 所有記憶體分配策略都受到外部碎片(external fragmentation)的影響，儘管 `First fit` 和 `Best fit` 的人比 `Worst fit` 的人經歷的問題更多
   - 外部碎表示將可用記憶體分成許多小塊，儘管總和可以，但這些小塊都不足以滿足下一個記憶體需求
 - 因碎片而丟失的記憶體量可能會因演算法、使用模式和某些設計決策（例如，要分配的洞的一端以及要保存在空閒列表中的一端）而異
@@ -136,7 +136,7 @@
 
 ![](https://i.imgur.com/NarhWys.png "Logical View of Segmentation")
 
-### 8.4.2 Segmentation Hardware(分段硬體)
+### Segmentation Hardware(分段硬體)
 - 邏輯位址考慮以下元組
 ```		
 <segment-number, offset>,
@@ -175,7 +175,7 @@
     - 避免了大小不同的記憶體區塊的問題
 - 是當今使用的主要記憶體管理技術
 
-### 8.5.1 Basic Method(基本方法)
+### Basic Method(基本方法)
 - 分頁背後的基本思想是將實體記憶體劃分為多個大小相等的區塊稱為**欄(frame)** ，並將程序邏輯儲存空間劃分為相同大小的區塊稱為**頁(page)**
   - frame 大小為 2 的次方，介於 512bytes 和 16MB 之間
   - page 追蹤所有空閒的 `frame`
@@ -233,7 +233,7 @@
 - process 視圖和實體記憶體現在大不相同
 - 透過實現 process 只能訪問自己的記憶體
 
-### 8.5.2 Hardware Support
+### Hardware Support
 - 必須針對每個記憶體引用進行頁查找，並且每當一個 process 被換入或換出 CPU 時，其 `page table` 也必須與指令暫存器(instruction registers)一起換入和換出
   - 適當提供硬體支援對於該操作，使其盡可能快並且也使 process 切換盡可能的快
 - 一種選擇是為 `page table` 使用一組暫存器
@@ -269,7 +269,7 @@
 
 ![](https://i.imgur.com/80MUmnV.png)
 
-### 8.5.3 Protection
+### Protection
 - 分頁表(page table)還可以幫助防止 process 訪問它們不應該訪問的記憶體，或者以不應該訪問的方式訪問自己的記憶體
 - 可以向分頁表中添加一個或多個 bit，將分頁(page)分類為 `read-write`、`read-only`、`read-write-execute` 或這些種類的某種組合
   - 可以檢查每個記憶體參照，以確保它以適當的模式訪問記憶體
@@ -280,12 +280,35 @@
 
 >因為內部碎片(internal fragmentation)，上述 `valid/invalid` bit 無法阻止所有非法記憶體訪問。最後的 page 中的內存區域未被 process 完全持有，並且可能包含最後使用該欄的人留下的數據
 
-### 8.5.4 Shared Pages (共用分頁)
+### Shared Pages (共用分頁)
 - 透過簡單的在多個頁欄(page frames)中複製頁號(page numbers)，分頁系統(Paging systems)可以非常輕鬆的共享記憶體區塊
   - 可用代碼或數據來完成
 - 如果代碼是**可重進入**的，表示它不會以任何方式寫入(唯讀)或更改代碼（它是非自行修改的），因此可以安全重新輸入它。更重要的是，也表示代碼可以由多個 process 共享，只要每個 process 都有自己的數據和暫存器拷貝（包括指令暫存器）即可
 - 下面示例中，三個不同的使用者同時運行編輯器，但是代碼僅一次加載到記憶體中（在頁欄(page frames)中）
 ![](https://i.imgur.com/6dTgXBa.png "Sharing of code in a paging environment")
 
-## 8.6 Structure of the Page Table (分頁表的結構)
+## Structure of the Page Table (分頁表的結構)
+### Hierarchical Paging
+- 大多數現代計算機系統支持 `2^32` 到 `2^64` 的邏輯位址空間
+- 具有 `2^32` 的位址空間和 `4K（2^12）` 的頁面大小，這將在頁面表中保留 `2^20` 項。在每個項 4 個位元組的情況下，這相當於一個 `4MB` 的分頁表，該表太大而無法合理保存在連續記憶體中
+- 一種選擇是使用兩層分頁系統，即分頁表本身也由分頁表的方法取得
+![](https://i.imgur.com/eBovhMG.png "Two-Level Page-Table Scheme")
+- 例如，上述的 20 bits 可以分解為兩個 10 bits 的分頁號碼
+  - 第一個標識外部分頁表中的項，該項標識在記憶體中的位置以查找內部頁表的一頁
+  - 後 10 bits 在該內部分頁表中找到特定項，該項進而標識實體記憶體中的特定欄(frame)
+  - 32 bits 邏輯位址的其餘 12 bits 是 4K 欄內的偏移量
+  ![](https://i.imgur.com/C67z3ge.png)
+  - `p1` 是指向外層分頁表(outer page table) 的索引值
+  - `p2` 是內層分頁表所指的分頁表之偏移量，如下圖
+  ![](https://i.imgur.com/DVYguBl.png "Address translation for a two-level 32-bit paging architecture")
+  - 因位址轉換由外層分頁表向內做起，也稱**向前對映分頁表(forward-mapped page table)**
 
+- VAX 體系結構將 32 bit 位址分為 4 個大小相等的部分，每頁為 512 bytes ，產生的位址形式為：
+![](https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/images/Chapter8/8_15A_VAX_Address.jpg)
+  - 就上圖一個區段而言，單層分頁表的大小扔然是 `2^21 bit x 每項 4 Byte = 8MB`
+  
+- 在具有 64 bit 邏輯位址空間和 4KB 頁的情況下，有 52 bit 值得使用的分頁號碼，即使對於兩級分頁也是如此
+  - 一個可以提高分頁級別，但是如果使用 10 bit 分頁表，它將需要 7 個間接級別，這將極大降低記憶體訪問速度。因此，必須使用其他方法
+  ![](https://i.imgur.com/aaQiMPO.png "Three-level Paging Scheme")
+  
+### Hashed Page Tables
