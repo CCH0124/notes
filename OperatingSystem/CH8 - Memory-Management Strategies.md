@@ -297,7 +297,7 @@
   - 第一個標識外部分頁表中的項，該項標識在記憶體中的位置以查找內部頁表的一頁
   - 後 10 bits 在該內部分頁表中找到特定項，該項進而標識實體記憶體中的特定欄(frame)
   - 32 bits 邏輯位址的其餘 12 bits 是 4K 欄內的偏移量
-  ![](https://i.imgur.com/C67z3ge.png)
+  ![](![](https://i.imgur.com/9phdiGy.png))
   - `p1` 是指向外層分頁表(outer page table) 的索引值
   - `p2` 是內層分頁表所指的分頁表之偏移量，如下圖
   ![](https://i.imgur.com/DVYguBl.png "Address translation for a two-level 32-bit paging architecture")
