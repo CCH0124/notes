@@ -133,3 +133,36 @@
 - 內核運行後，它可以讓用戶有機會進入單用戶模式，也稱為維護模式。 如果有任何系統服務，此模式啟動的次數非常少，並且除控制台上的主登錄之外不啟用任何其他登錄。 該模式主要用於系統維護和診斷。
 - 當系統進入完全多用戶多任務模式時，它會檢查配置文件以確定要啟動哪些系統服務，並依次啟動每個服務。 然後，它會在已配置為啟用用戶登錄的每個登錄設備上生成登錄程序（gettys）。
   - （getty程序初始化終端 I/O，發出登錄提示，接受登錄名和密碼，並對用戶進行身份驗證。如果用戶的密碼經過身份驗證，則 getty 會在系統文件中查找以確定為用戶分配的 shell， 然後"execs"（成為）用戶的 shell。shell 程序將查看系統和用戶配置文件以初始化自己，然後發出用戶命令的提示。每當 shell 死亡時，通過註銷或其他方式，然後系統 將為該終端設備發布新的 getty。） 
+
+## OS Architecture
+##### Simple 
+- 簡單、快速，但安全性不高
+
+![](https://i.imgur.com/FjjXEGt.png)
+
+##### Layer   
+
+![](https://i.imgur.com/sGscSHR.png)
+
+- 容易除錯，原因是每一層只能存取內層的東西
+
+##### Microkernel 
+
+![](https://i.imgur.com/uP27C3a.png)
+
+- 安全性提高，Kernel 變小很多
+- 溝通透過 Message pass 效能不是很好
+
+##### Modular
+
+![](https://i.imgur.com/d4a8QDh.png)
+
+- Uses object-oriented approach
+- Each core component is separate
+- Each talks to the others over known interfaces
+- Each is loadable as needed within the kernel
+
+##### Virtual Machine
+- 在作業統上的 Kernel 模擬一個 Kernel 使得每台虛擬機相互隔離
+- 但實際上虛擬機的 Kernel 是運行在 User Space 上因此，做呼叫時會透過 interrupter 到實體機的 Kernel 進行動作，這也導致虛擬機效能不好的原因
+- 現今的 CPU 或一些硬體可以資源虛擬化，這也讓虛擬機的 Kernel 可被識別，這提升了效能
